@@ -1,7 +1,17 @@
 import React, { Component } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import InputLarge from "./../../components/UI/InputLarge";
+import {login} from './../../actions';
+import { useDispatch } from "react-redux";
 class Signin extends Component {
+  userLogin = (e) => {
+    e.preventDefault();
+    const user = {
+      email : 'riz@gmail.com',
+      password : '123456'
+    }
+    login(user);
+  }
   render() {
     return (
       <Container>
@@ -14,7 +24,10 @@ class Signin extends Component {
             xl={12}
             className="col_form-center"
           >
-            <Form className="sort">
+            <Form
+              className="sort"
+              onSubmit={this.userLogin}
+            >
               <Form.Group controlId="formBasicEmail">
                 <Row>
                   <InputLarge
