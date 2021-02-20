@@ -1,3 +1,7 @@
+body {
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+}
 .App {
   text-align: center;
 }
@@ -35,4 +39,14 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.sort {
+  text-align: justify;
+  width: 40%;
+}
+.col_form-center {
+  display: flex;
+  margin-top: 1rem;
+  justify-content: center;
 }
