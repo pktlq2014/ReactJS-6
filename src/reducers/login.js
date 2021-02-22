@@ -8,6 +8,12 @@ var login = (state = initialState, action) => {
             console.log(state);
             return state;
         }
+        case types.authConstants.SIGNUP: {
+            console.log(action);
+            var {data} = action;
+            state.push(data);
+            return state;
+        }
         default : return state;
     }
 }

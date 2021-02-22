@@ -165,17 +165,6 @@ class Signin extends Component {
                 </Row>
               </Form.Group>
 
-              <Form.Group controlId="formBasicCheckbox">
-                <Form.Check
-                  type="checkbox"
-                  onChange={this.getEmail}
-                  value={true}
-                  name="checkBoxEmail"
-                  checked={this.state.checkBoxEmail === true}
-                  label="Check me out"
-                />
-              </Form.Group>
-
               <Button variant="primary" type="submit">
                 Submit
                 {dataLogin}
