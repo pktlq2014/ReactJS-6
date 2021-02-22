@@ -12,7 +12,7 @@ class Signin extends Component {
       password: "",
       error: "",
       checkBoxEmail: false,
-      onSubmit : 0
+      onSubmit: 0,
     };
   }
   componentDidMount() {
@@ -39,21 +39,36 @@ class Signin extends Component {
       email: this.state.email,
       password: this.state.password,
     };
-    this.props.onLogin(user);
+    var { login } = this.props;
+    login.forEach((values, index) => {
+      if (values.email === this.state.email && values.password === this.state.password) {
+        this.props.onLogin(user);
+      }
+    });
     this.setState({
-      onSubmit : 1
+      onSubmit: 1,
     });
   };
   render() {
     var { login } = this.props;
     var dataLogin = login.map((values, index) => {
-      if (this.state.email === values.email && this.state.onSubmit === 1 && this.state.password === values.password) {
+      if (
+        values.email === this.state.email &&
+        this.state.onSubmit === 1 &&
+        values.password === this.state.password
+      ) {
         const user = {
           email: this.state.email,
           password: this.state.password,
         };
-        localStorage.setItem('dataLogin', JSON.stringify(user));
-        return <Redirect to="/" />;
+        localStorage.setItem("dataLogin", JSON.stringify(user));
+        return <Redirect key={index} to="/" />;
+      } else {
+        if (this.state.onSubmit === 1) {
+          this.setState({
+            onSubmit: 0,
+          });
+        }
       }
     });
     return (
@@ -149,6 +164,7 @@ class Signin extends Component {
                   </Col>
                 </Row>
               </Form.Group>
+
               <Form.Group controlId="formBasicCheckbox">
                 <Form.Check
                   type="checkbox"
@@ -159,6 +175,7 @@ class Signin extends Component {
                   label="Check me out"
                 />
               </Form.Group>
+
               <Button variant="primary" type="submit">
                 Submit
                 {dataLogin}

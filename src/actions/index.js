@@ -24,6 +24,7 @@ export const login = () => {
     //   data: data,
     // });
     return API('api', 'GET', null).then(res => {
+        console.log(res);
         dispatch(dataLogin(res.data));
     });
   };

@@ -1,4 +1,5 @@
 import * as types from './../constants/index';
+// nhận data từ server
 const initialState = [];
 var login = (state = initialState, action) => {
     switch(action.type) {

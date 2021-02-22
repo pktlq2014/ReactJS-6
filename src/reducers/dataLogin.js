@@ -1,5 +1,5 @@
 import * as types from '../constants/index';
-import { NavLink, Link, Redirect } from "react-router-dom";
+// tạo 1 object trên local để kiểm tra trường hợp và so sánh đăng nhập
 var dataLogin = JSON.parse(localStorage.getItem('dataLogin'));
 const initialState = dataLogin;
 var login = (state = initialState, action) => {

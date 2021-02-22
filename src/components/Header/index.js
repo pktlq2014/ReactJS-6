@@ -52,9 +52,9 @@ class Header extends Component {
     );
   };
   render() {
-    //var dataLogin1 = JSON.parse(localStorage.getItem('dataLogin'));
+    //var dataLogin = JSON.parse(localStorage.getItem('dataLogin'));
     var { dataLogin } = this.props;
-    console.log(this.state.data);
+    console.log(dataLogin);
     // if(dataLogin1) {
     //   this.setState({
     //     data : 1
