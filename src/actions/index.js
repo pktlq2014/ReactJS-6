@@ -60,3 +60,37 @@ export const signUpAPI = (data) => {
         data : data
     }
 }
+export const category = () => {
+    return async (dispatch) => {
+      return API('category', 'GET', null).then(res => {
+          console.log(res);
+          dispatch(categoryAPI(res.data));
+      });
+    };
+  };
+  export const categoryAPI = (data) => {
+      return {
+          type : types.authConstants.CATEGORY,
+          data : data
+      }
+  }
+  export const categoryADD = (data) => {
+    return (dispatch) => {
+        // thời gian lấy dữ liệu từ server về lâu hơn thời gian lấy dữ liệu 
+        // rồi truyền vào dispatch, nên sinh ra lỗi middleware
+        // hay nói cách khác là khi truyền dữ liệu từ server vào dispatch nhanh quá
+        // lúc này chưa có dữ liệu để truyền vào dispatch
+        // middleware là lớp nằm giữa reducers và dispatch actions
+        // giúp fetch dữ liệu xong mới dispatch actions
+        return API('category', 'POST', data).then(res => {
+            console.log(res.data);
+            dispatch(addCategory(res.data));
+        });
+    }
+}
+export const addCategory = (data) => {
+    return {
+        type : types.authConstants.ADD_CATEGORY,
+        data : data
+    }
+}

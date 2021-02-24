@@ -5,4 +5,6 @@ export const authConstants = {
   DATA_LOGIN : 'DATA_LOGIN',
   SIGNOUT : 'SIGNOUT',
   SIGNUP : 'SIGNUP',
+  CATEGORY : 'CATEGORY',
+  ADD_CATEGORY : 'ADD_CATEGORY',
 };

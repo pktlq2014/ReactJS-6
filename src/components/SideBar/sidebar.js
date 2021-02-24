@@ -7,7 +7,7 @@ class sidebar extends Component {
     return (
       <Col md={2} className="side_bar_menu">
         <li>
-          <NavLink to="/">Home</NavLink>
+          <NavLink exact to="/">Home</NavLink>
         </li>
         <li>
           <NavLink to="/products">Products</NavLink>
