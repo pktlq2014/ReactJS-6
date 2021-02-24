@@ -10,7 +10,7 @@ class products extends Component {
     super(props);
     this.state = {
       modalShow: false,
-      idParent: 0,
+      categoryID: "",
       name: "",
       quantity: "",
       price: "",
@@ -59,6 +59,24 @@ class products extends Component {
   onSubmit = (e) => {
     e.preventDefault();
     console.log(this.state);
+    var array = [];
+    var pictures = this.state.productPictures;
+    pictures.forEach((values, index) => {
+      console.log(values);
+      array.push({id : values.lastModified, img : values.name});
+    });
+    console.log(pictures);
+
+    var data = {
+      name : this.state.name,
+      price : this.state.price,
+      quantity : this.state.quantity,
+      description : this.state.description,
+      categoryID : this.state.categoryID,
+      image : this.state.image,
+      productPictures : array
+    }
+    this.props.onProductAPI(data);
   };
   setModalShow = () => {
     this.setState({
@@ -71,8 +89,9 @@ class products extends Component {
     });
   };
   render() {
-    var { category } = this.props;
+    var { category, product } = this.props;
     console.log(category);
+    console.log(product);
     return (
       <Container fluid>
         <Row className="side_bar">
@@ -144,9 +163,9 @@ class products extends Component {
                           <Form.Group controlId="exampleForm.ControlSelect1">
                             <Form.Label>Category select</Form.Label>
                             <Form.Control
-                              name="idParent"
+                              name="categoryID"
                               onChange={this.onChange}
-                              value={this.state.idParent}
+                              value={this.state.categoryID}
                               as="select"
                             >
                               <option>category select</option>
@@ -204,6 +223,7 @@ class products extends Component {
 const mapStateToProps = (state) => {
   return {
     category: state.category,
+    product : state.product
   };
 }
 const mapDispatchToProps = (dispatch, props) => {
@@ -211,6 +231,9 @@ const mapDispatchToProps = (dispatch, props) => {
     onCategory: () => {
       dispatch(actions.category());
     },
+    onProductAPI : (data) => {
+      dispatch(actions.productAPI(data));
+    }
   };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(products);
