@@ -220,9 +220,8 @@ class category extends Component {
                             type="file"
                             name="image"
                             onChange={this.onChange}
-                            value={this.state.image}
                             id="exampleFormControlFile1"
-                            label="Example file input"
+                            label="Picture category input"
                           />
                           {/* </Form.Group> */}
                           <Modal.Footer>
