@@ -14,3 +14,22 @@
 .textAlign-justify {
   text-align: justify;
 }
+.img {
+  image-rendering: pixelated;
+  width: 4rem;
+  height: 4rem;
+  object-fit: contain;
+  filter: drop-shadow(0 0 5px blue);
+}
+.textAlign-center {
+  text-align: justify;
+}
+.width-10 {
+  width: 10rem;
+}
+.width-20 {
+  width: 20rem;
+}
+.width-5 {
+  width: 5rem;
+}

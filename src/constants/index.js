@@ -8,4 +8,5 @@ export const authConstants = {
   CATEGORY : 'CATEGORY',
   ADD_CATEGORY : 'ADD_CATEGORY',
   PRODUCT : 'PRODUCT',
+  SHOW_PRODUCT : 'SHOW_PRODUCT',
 };

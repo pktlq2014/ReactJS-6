@@ -80,6 +80,11 @@ class category extends Component {
     };
     console.log(data);
     this.props.onAddCategory(data);
+    this.setState({
+      idParent : "",
+      name : "",
+      image : ""
+    });
   };
   setModalShow = () => {
     this.setState({

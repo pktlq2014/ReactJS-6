@@ -114,3 +114,17 @@ export const productReducers = (data) => {
         data : data
     }
 }
+export const showProduct = () => {
+    return async (dispatch) => {
+      return API('product', 'GET', null).then(res => {
+          console.log(res);
+          dispatch(showProductReducers(res.data));
+      });
+    };
+  };
+  export const showProductReducers = (data) => {
+      return {
+          type : types.authConstants.SHOW_PRODUCT,
+          data : data
+      }
+  }

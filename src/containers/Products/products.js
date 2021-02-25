@@ -1,9 +1,17 @@
 import React, { Component } from "react";
-import { Row, Col, Container, Button, Modal, Form } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Container,
+  Button,
+  Modal,
+  Form,
+  Table,
+} from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import "./styles.css";
-import {connect} from 'react-redux';
-import * as actions from './../../actions/index';
+import { connect } from "react-redux";
+import * as actions from "./../../actions/index";
 import SideBar from "./../../components/SideBar/sidebar";
 class products extends Component {
   constructor(props) {
@@ -16,11 +24,12 @@ class products extends Component {
       price: "",
       description: "",
       productPictures: [],
-      image : ""
+      image: "",
     };
   }
   componentDidMount() {
     this.props.onCategory();
+    this.props.onShowProduct();
   }
   getOptionMenu = (categories, options1 = []) => {
     // ép phẳng json về, sau đó dùng option hiển thị ra 1 lượt là xong
@@ -39,7 +48,7 @@ class products extends Component {
   onChangeImage = (e) => {
     var data = [...this.state.productPictures, e.target.files[0]];
     this.setState({
-      productPictures : data
+      productPictures: data,
     });
     var { target } = e;
     var name = target.name;
@@ -47,7 +56,7 @@ class products extends Component {
     this.setState({
       [name]: value,
     });
-  }
+  };
   onChange = (e) => {
     var { target } = e;
     var name = target.name;
@@ -63,19 +72,19 @@ class products extends Component {
     var pictures = this.state.productPictures;
     pictures.forEach((values, index) => {
       console.log(values);
-      array.push({id : values.lastModified, img : values.name});
+      array.push({ id: values.lastModified, img: values.name });
     });
     console.log(pictures);
 
     var data = {
-      name : this.state.name,
-      price : this.state.price,
-      quantity : this.state.quantity,
-      description : this.state.description,
-      categoryID : this.state.categoryID,
-      image : this.state.image,
-      productPictures : array
-    }
+      name: this.state.name,
+      price: this.state.price,
+      quantity: this.state.quantity,
+      description: this.state.description,
+      categoryID: this.state.categoryID,
+      image: this.state.image,
+      productPictures: array,
+    };
     this.props.onProductAPI(data);
   };
   setModalShow = () => {
@@ -89,9 +98,38 @@ class products extends Component {
     });
   };
   render() {
-    var { category, product } = this.props;
+    var { category, showProduct } = this.props;
     console.log(category);
-    console.log(product);
+    console.log(showProduct);
+    //var image = require(`./images/truoc.jpg`);
+    var data = showProduct.map((values, index) => {
+      return (
+        <tr key={index} className="textAlign-center">
+          <td>{values.id}</td>
+          <td className="width-10">{values.name}</td>
+          <td className="width-10">{values.price}</td>
+          <td className="width-5">{values.quantity}</td>
+          <td className="width-20">{values.description}</td>
+          <td className="width-5">{values.categoryID}</td>
+          <td className="width-10">
+            {
+              values.productPictures.map((valuess, index) => {
+                var image = require(`./../../assets/images/${valuess.img}`)
+                return (
+                  <img
+                  key={index}
+                  className="img"
+                  //src={`${process.env.PUBLIC_URL}/${truoc}`}
+                  src={image.default}
+                  alt="logo"
+                />
+                )
+              })
+            }
+          </td>
+        </tr>
+      );
+    });
     return (
       <Container fluid>
         <Row className="side_bar">
@@ -180,16 +218,16 @@ class products extends Component {
                               )}
                             </Form.Control>
                           </Form.Group>
-                          {
-                            this.state.productPictures.length > 0 ?
-                            this.state.productPictures.map((values, index) => {
-                              return <div key={index}>{values.name}</div>;
-                            })
-                             : null
-                          }
+                          {this.state.productPictures.length > 0
+                            ? this.state.productPictures.map(
+                                (values, index) => {
+                                  return <div key={index}>{values.name}</div>;
+                                }
+                              )
+                            : null}
                           <Form.File
                             type="file"
-                            name="image"  
+                            name="image"
                             onChange={this.onChangeImage}
                             id="exampleFormControlFile1"
                             label="Picture product input"
@@ -211,7 +249,22 @@ class products extends Component {
                 </Col>
               </Row>
               <Row>
-                <Col md={12}></Col>
+                <Col md={12}>
+                  <Table striped bordered hover variant="dark">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Description</th>
+                        <th>CategoryID</th>
+                        <th>ProductPicture</th>
+                      </tr>
+                    </thead>
+                    <tbody>{data}</tbody>
+                  </Table>
+                </Col>
               </Row>
             </Container>
           </Col>
@@ -223,17 +276,20 @@ class products extends Component {
 const mapStateToProps = (state) => {
   return {
     category: state.category,
-    product : state.product
+    showProduct: state.showProduct,
   };
-}
+};
 const mapDispatchToProps = (dispatch, props) => {
   return {
     onCategory: () => {
       dispatch(actions.category());
     },
-    onProductAPI : (data) => {
+    onProductAPI: (data) => {
       dispatch(actions.productAPI(data));
-    }
+    },
+    onShowProduct: () => {
+      dispatch(actions.showProduct());
+    },
   };
-}
+};
 export default connect(mapStateToProps, mapDispatchToProps)(products);
