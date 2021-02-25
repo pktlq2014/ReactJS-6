@@ -132,27 +132,28 @@ class category extends Component {
     console.log(categories);
     const categoryList = [];
     let category;
-    if(idParent === null) {
-      category = categories.filter(cat => cat.idParent === undefined);
-    }
-    else {
-      category = categories.filter(cat => cat.idParent === idParent);
+    if (idParent === null) {
+      category = categories.filter((cat, index) => {
+        return cat.idParent === undefined || cat.idParent === "";
+      });
+    } else {
+      category = categories.filter((cat) => cat.idParent === idParent);
     }
     console.log(category);
-    for(let cate of category) {
+    for (let cate of category) {
       categoryList.push({
         id: cate.id,
-        name : cate.name,
-        idParent : cate.idParent,
-        children: this.createCategories(categories, cate.id)
-      })
+        name: cate.name,
+        idParent: cate.idParent,
+        children: this.createCategories(categories, cate.id),
+      });
     }
     console.log(categoryList);
     return categoryList;
-  }
+  };
   render() {
     // api data từ cateroty đang ở dạng thẳng, phải filter qua lọc qua và
-    // dùng đệ quy để lọc và hiển thị con theo cha 
+    // dùng đệ quy để lọc và hiển thị con theo cha
     var { category1 } = this.props;
     //var test = [...category];
     // lọc và hiển thị lại array sau khi nhận từ api
