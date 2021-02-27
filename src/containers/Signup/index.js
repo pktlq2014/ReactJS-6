@@ -2,46 +2,68 @@ import React, { Component } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import InputSmall from "../../components/UI/InputSmall";
 import InputLarge from "./../../components/UI/InputLarge";
-import {connect} from 'react-redux';
+import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import * as actions from './../../actions/index';
+import * as actions from "./../../actions/index";
 class Signup extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstname : '',
-      lastname : '',
-      email : '',
-      password : '',
-      onSubmit : 0
+      firstname: "",
+      lastname: "",
+      email: "",
+      password: "",
+      onSubmit: 0,
     };
   }
+  componentDidMount() {
+    this.props.onAccount();
+  }
   onChange = (e) => {
-    var {target} = e;
+    var { target } = e;
     var name = target.name;
     var value = target.value;
     this.setState({
-      [name] : value
-    })
-  }
+      [name]: value,
+    });
+  };
   onSubmit = (e) => {
     e.preventDefault();
-    var data = {
-      firstname : this.state.firstname,
-      lastname : this.state.lastname,
-      email : this.state.email,
-      password : this.state.password
+    var { firstname, lastname, email, password } = this.state;
+    if (
+      firstname !== "" &&
+      lastname !== "" &&
+      email !== "" &&
+      password !== ""
+    ) {
+      var { login } = this.props;
+      console.log(login);
+      login.forEach((values, index) => {
+        if (values.email === email) {
+          alert("Email Đã Được Đăng Ký. Xin Vui Lòng Nhập Email Khác!!!");
+        } else {
+          var data = {
+            firstname: firstname,
+            lastname: lastname,
+            email: email,
+            password: password,
+          };
+          this.props.onSignup(data);
+          this.setState({
+            onSubmit: 1,
+          });
+        }
+      });
+    } else {
+      alert("Dữ Liệu Chưa Nhập Đầy Đủ. Xin Vui Lòng Kiểm Tra Lại!!!");
     }
-    this.props.onSignup(data);
-    this.setState({
-      onSubmit : 1
-    })
-  }
+  };
   render() {
-    var {dataSignup} = this.props;
+    var { dataSignup, login } = this.props;
     console.log(dataSignup);
-    var {onSubmit} = this.state;
-    if(onSubmit === 1) {
+    console.log(login);
+    var { onSubmit } = this.state;
+    if (onSubmit === 1) {
       return <Redirect to="/" />;
     }
     return (
@@ -71,10 +93,10 @@ class Signup extends Component {
                   <Col xs={12} sm={12} md={12} lg={6} xl={6}>
                     <Form.Label>Last Name</Form.Label>
                     <Form.Control
-                       type="text"
-                       name="lastname"
-                       value={this.state.lastname}
-                       onChange={this.onChange}
+                      type="text"
+                      name="lastname"
+                      value={this.state.lastname}
+                      onChange={this.onChange}
                       placeholder="Enter last name"
                     />
                   </Col>
@@ -123,14 +145,18 @@ class Signup extends Component {
 }
 const mapStateToProps = (state) => {
   return {
-    dataSignup : state.dataSignup
+    dataSignup: state.dataSignup,
+    login: state.login,
   };
-}
+};
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    onSignup : (data) => {
+    onSignup: (data) => {
       dispatch(actions.signUp(data));
-    }
-  }
-}
+    },
+    onAccount: () => {
+      dispatch(actions.login());
+    },
+  };
+};
 export default connect(mapStateToProps, mapDispatchToProps)(Signup);

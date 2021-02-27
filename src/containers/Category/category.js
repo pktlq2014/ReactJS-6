@@ -110,7 +110,7 @@ class category extends Component {
             {item.name}
             {
               <ul>
-                <li>{this.getMenu(item.children)}</li>
+                {this.getMenu(item.children)}
               </ul>
             }
           </li>
