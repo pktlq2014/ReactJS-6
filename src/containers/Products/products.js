@@ -25,6 +25,8 @@ class products extends Component {
       description: "",
       productPictures: [],
       image: "",
+      star : "",
+      sales : ""
     };
   }
   componentDidMount() {
@@ -82,6 +84,8 @@ class products extends Component {
       quantity: this.state.quantity,
       description: this.state.description,
       categoryID: this.state.categoryID,
+      star: this.state.star,
+      sales: this.state.sales,
       image: this.state.image,
       productPictures: array,
     };
@@ -196,6 +200,26 @@ class products extends Component {
                               value={this.state.description}
                               onChange={this.onChange}
                               placeholder="description..."
+                            />
+                          </Form.Group>
+                          <Form.Group controlId="exampleForm.ControlInput1">
+                            <Form.Label>Sales</Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="sales"
+                              value={this.state.sales}
+                              onChange={this.onChange}
+                              placeholder="sales..."
+                            />
+                          </Form.Group>
+                          <Form.Group controlId="exampleForm.ControlInput1">
+                            <Form.Label>Star</Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="star"
+                              value={this.state.star}
+                              onChange={this.onChange}
+                              placeholder="star..."
                             />
                           </Form.Group>
                           <Form.Group controlId="exampleForm.ControlSelect1">
