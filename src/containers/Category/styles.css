@@ -14,3 +14,11 @@
 .textAlign-justify {
   text-align: justify;
 }
+.category {
+  display: flex;
+  justify-content: space-between;
+}
+.edit_category {
+  display: flex;
+  justify-content: space-between;
+}
