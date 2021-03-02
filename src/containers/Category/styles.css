@@ -22,3 +22,11 @@
   display: flex;
   justify-content: space-between;
 }
+.expanded_category p.expanded {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+.checked_category p.checked {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
