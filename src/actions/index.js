@@ -128,3 +128,23 @@ export const showProduct = () => {
           data : data
       }
   }
+export const updateCategoryAPI = (category) => {
+    return (dispatch) => {
+        // thời gian lấy dữ liệu từ server về lâu hơn thời gian lấy dữ liệu 
+        // rồi truyền vào dispatch, nên sinh ra lỗi middleware
+        // hay nói cách khác là khi truyền dữ liệu từ server vào dispatch nhanh quá
+        // lúc này chưa có dữ liệu để truyền vào dispatch
+        // middleware là lớp nằm giữa reducers và dispatch actions
+        // giúp fetch dữ liệu xong mới dispatch actions
+        return API(`category/${category.id}`, 'PUT', category).then(res => {
+            console.log(category);
+            dispatch(updateCategoryReducers(res.data));
+        });
+    }
+}
+export const updateCategoryReducers = (category) => {
+    return {
+        type : types.authConstants.UPDATE_CATEGORY,
+        category : category
+    }
+}

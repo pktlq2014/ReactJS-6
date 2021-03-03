@@ -88,8 +88,114 @@ class category extends Component {
       ],
       checkedArrayShow: [],
       expandedArrayShow: [],
+      typeSelected: 0,
+      arrayUpdate : [],
+      dataUpdate : {
+        id : '',
+        name : '',
+        idParent : ''
+      },
+      idUpdate : '',
+      nameUpdate : '',
+      idParentUpdate : ''
     };
   }
+  renderAddCategoryModal = (category1) => {
+    return (
+      <Modal
+        show={this.state.modalShow}
+        onHide={this.onHideShow}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Add New Category
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={this.onSubmit}>
+            <Form.Group controlId="exampleForm.ControlInput1">
+              <Form.Label>New category</Form.Label>
+              <Form.Control
+                type="text"
+                name="name"
+                value={this.state.name}
+                onChange={this.onChange}
+                placeholder="input category..."
+              />
+            </Form.Group>
+            <Form.Group controlId="exampleForm.ControlSelect1">
+              <Form.Label>Category select</Form.Label>
+              <Form.Control
+                name="idParent"
+                onChange={this.onChange}
+                value={this.state.idParent}
+                as="select"
+              >
+                <option>category select</option>
+                {/* ép json dạng cha-con thẳng lại thành cây
+                              trong khi đó lại không dùng json nguyên mẫu rãnh thiệt */}
+                {/* {this.getOptionMenu(category).map(
+                                (values, index) => {
+                                  return (
+                                    <option key={index} value={values.id}>
+                                      {values.name}
+                                    </option>
+                                  );
+                                }
+                              )} */}
+                {category1.map((values, index) => {
+                  return (
+                    <option key={index} value={values.id}>
+                      {values.name}
+                    </option>
+                  );
+                })}
+              </Form.Control>
+            </Form.Group>
+            {/* <Form.Group> */}
+            {/* <Form.File
+                          type="file"
+                          name="image"
+                          onChange={this.onChange}
+                          id="exampleFormControlFile1"
+                          label="Picture category input"
+                        /> */}
+            {/* </Form.Group> */}
+            <Modal.Footer>
+              <Button onClick={this.onHideShow} type="submit" variant="primary">
+                Save Changes
+              </Button>
+              <Button onClick={this.onHideShow}>Close</Button>
+            </Modal.Footer>
+          </Form>
+        </Modal.Body>
+      </Modal>
+    );
+  }
+  handleCategoryInput = (key, value, index, type) => {
+    var { checkedArrayShow, expandedArrayShow } = this.state;
+    console.log(checkedArrayShow);
+    if (type === "checked") {
+      var resultChecked = checkedArrayShow.map((values, _index) => {
+        return index === _index ? { ...values, [key]: value } : values;
+      });
+      console.log(resultChecked);
+      this.setState({
+        checkedArrayShow: resultChecked,
+      });
+    } else {
+      var resultExpanded = expandedArrayShow.map((values, _index) => {
+        return index === _index ? { ...values, [key]: value } : values;
+      });
+      console.log(resultExpanded);
+      this.setState({
+        expandedArrayShow: resultExpanded,
+      });
+    }
+  };
   onChange = (e) => {
     var { target } = e;
     var name = target.name;
@@ -98,6 +204,14 @@ class category extends Component {
       [name]: value,
     });
   };
+  // onChangeUpdate = (e) => {
+  //   var { target } = e;
+  //   var name = target.name;
+  //   var value = target.value;
+  //   this.setState({
+  //     [name]: value,
+  //   });
+  // };
   onSubmit = (e) => {
     e.preventDefault();
     var data = {
@@ -112,6 +226,51 @@ class category extends Component {
       image: "",
     });
   };
+  onSubmitUpdate = (e) => {
+    e.preventDefault();
+    console.log(this.state);
+    var array = [];
+    var {checkedArrayShow, expandedArrayShow} = this.state;
+    console.log(checkedArrayShow);
+    console.log(expandedArrayShow);
+    checkedArrayShow.forEach((values, index) => {
+      //array.push(values);
+      console.log(values.id);
+      console.log(values.idParent);
+      console.log(values.name);
+      // this.setState({
+      //   idUpdate : values.id,
+      //   nameUpdate : values.name,
+      //   idParentUpdate  : values.idParent
+      // })
+      // this.setState({
+      //   dataUpdate : {
+      //     id : values.id,
+      //     idParent : values.idParent,
+      //     name : values.name
+      //   }
+      // });
+      var result = {
+        id : values.id,
+        name : values.name,
+        idParent : values.idParent
+      }
+      console.log(result);
+      this.props.onUpdateCategory(result);
+    });
+    // expandedArrayShow.forEach((values, index) => {
+    //   array.push(values);
+    // });
+    console.log(array);
+    // this.setState({
+    //   arrayUpdate : array
+    // })
+    // console.log(this.state.arrayUpdate);
+  };
+  // onSubmitUpdate = (e) => {
+  //   e.preventDefault();
+  //   console.log(this.state);
+  // };
   setModalShow = () => {
     this.setState({
       modalShow: true,
@@ -253,6 +412,7 @@ class category extends Component {
     // api data từ cateroty đang ở dạng thẳng, phải filter qua lọc qua và
     // dùng đệ quy để lọc và hiển thị con theo cha
     var { category1 } = this.props;
+    var { checkedArrayShow, expandedArrayShow } = this.state;
     //var test = [...category];
     // lọc và hiển thị lại array sau khi nhận từ api
     // sắp xếp json theo dạng cha-con
@@ -272,89 +432,7 @@ class category extends Component {
                       Add Category
                     </Button>
                   </div>
-                  <Modal
-                    show={this.state.modalShow}
-                    onHide={this.onHideShow}
-                    size="lg"
-                    aria-labelledby="contained-modal-title-vcenter"
-                    centered
-                  >
-                    <Modal.Header closeButton>
-                      <Modal.Title id="contained-modal-title-vcenter">
-                        {/* {
-                          this.state.title.map((values, index) => {
-                            if(values.id === this.state.temp) {
-                              return values.name;
-                            }
-                          })
-                          // this.state.temp === 0 ? <p>Add New Category</p> : 'Update Category'
-                        } */}
-                        Add New Category
-                      </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      <Form onSubmit={this.onSubmit}>
-                        <Form.Group controlId="exampleForm.ControlInput1">
-                          <Form.Label>New category</Form.Label>
-                          <Form.Control
-                            type="text"
-                            name="name"
-                            value={this.state.name}
-                            onChange={this.onChange}
-                            placeholder="input category..."
-                          />
-                        </Form.Group>
-                        <Form.Group controlId="exampleForm.ControlSelect1">
-                          <Form.Label>Category select</Form.Label>
-                          <Form.Control
-                            name="idParent"
-                            onChange={this.onChange}
-                            value={this.state.idParent}
-                            as="select"
-                          >
-                            <option>category select</option>
-                            {/* ép json dạng cha-con thẳng lại thành cây
-                              trong khi đó lại không dùng json nguyên mẫu rãnh thiệt */}
-                            {/* {this.getOptionMenu(category).map(
-                                (values, index) => {
-                                  return (
-                                    <option key={index} value={values.id}>
-                                      {values.name}
-                                    </option>
-                                  );
-                                }
-                              )} */}
-                            {category1.map((values, index) => {
-                              return (
-                                <option key={index} value={values.id}>
-                                  {values.name}
-                                </option>
-                              );
-                            })}
-                          </Form.Control>
-                        </Form.Group>
-                        {/* <Form.Group> */}
-                        {/* <Form.File
-                          type="file"
-                          name="image"
-                          onChange={this.onChange}
-                          id="exampleFormControlFile1"
-                          label="Picture category input"
-                        /> */}
-                        {/* </Form.Group> */}
-                        <Modal.Footer>
-                          <Button
-                            onClick={this.onHideShow}
-                            type="submit"
-                            variant="primary"
-                          >
-                            Save Changes
-                          </Button>
-                          <Button onClick={this.onHideShow}>Close</Button>
-                        </Modal.Footer>
-                      </Form>
-                    </Modal.Body>
-                  </Modal>
+                  {this.renderAddCategoryModal(category1)}
 
                   {/* Edit */}
                   <Modal
@@ -370,155 +448,170 @@ class category extends Component {
                       </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                      <Form onSubmit={this.onSubmit}>
+                      <Form onSubmit={this.onSubmitUpdate}>
                         <div className="expanded_category">
                           <p className="expanded">Expanded Category</p>
-                          {this.state.expandedArrayShow.length > 0
-                            ? this.state.expandedArrayShow.map(
-                                (values, index) => {
-                                  return (
-                                    <Row>
-                                      <Col>
-                                        <Form.Group controlId="exampleForm.ControlInput1">
-                                          <Form.Label>Name category</Form.Label>
-                                          <Form.Control
-                                            type="text"
-                                            name="name"
-                                            // value={this.state.name}
-                                            value={values.name}
-                                            onChange={this.onChange}
-                                            placeholder="input category..."
-                                          />
-                                        </Form.Group>
-                                      </Col>
+                          {expandedArrayShow.length > 0 ? (
+                            expandedArrayShow.map((values, index) => {
+                              return (
+                                <Row key={index}>
+                                  <Col>
+                                    <Form.Group controlId="exampleForm.ControlInput1">
+                                      <Form.Label>Name category</Form.Label>
+                                      <Form.Control
+                                        type="text"
+                                        //name="nameUpdate"
+                                        // value={this.state.name}
+                                        value={values.name}
+                                        onChange={(e) =>
+                                          this.handleCategoryInput(
+                                            "name",
+                                            e.target.value,
+                                            index,
+                                            "expanded"
+                                          )
+                                        }
+                                        placeholder="input category..."
+                                      />
+                                    </Form.Group>
+                                  </Col>
 
-                                      <Col>
-                                        <Form.Group controlId="exampleForm.ControlSelect1">
-                                          <Form.Label>
-                                            Category select
-                                          </Form.Label>
-                                          <Form.Control
-                                            name="idParent"
-                                            onChange={this.onChange}
-                                            //value={this.state.idParent}
-                                            value={values.idParent}
-                                            as="select"
-                                          >
-                                            <option>category select</option>
-                                            {category1.map((values, index) => {
-                                              return (
-                                                <option
-                                                  key={index}
-                                                  value={values.id}
-                                                >
-                                                  {values.name}
-                                                </option>
-                                              );
-                                            })}
-                                          </Form.Control>
-                                        </Form.Group>
-                                      </Col>
+                                  <Col>
+                                    <Form.Group controlId="exampleForm.ControlSelect1">
+                                      <Form.Label>Category select</Form.Label>
+                                      <Form.Control
+                                        onChange={(e) =>
+                                          this.handleCategoryInput(
+                                            "idParent",
+                                            e.target.value,
+                                            index,
+                                            "expanded"
+                                          )
+                                        }
+                                        //value={this.state.idParent}
+                                        value={values.idParent}
+                                        as="select"
+                                      >
+                                        <option>category select</option>
+                                        {category1.map((values, index) => {
+                                          return (
+                                            <option
+                                              key={index}
+                                              value={values.id}
+                                            >
+                                              {values.name}
+                                            </option>
+                                          );
+                                        })}
+                                      </Form.Control>
+                                    </Form.Group>
+                                  </Col>
 
-                                      <Col>
-                                        <Form.Group controlId="exampleForm.ControlSelect1">
-                                          <Form.Label>Type select</Form.Label>
-                                          <Form.Control
-                                            name="idParent"
-                                            onChange={this.onChange}
-                                            value={this.state.idParent}
-                                            as="select"
-                                          >
-                                            <option value="">
-                                              Type select
-                                            </option>
-                                            <option value="store">Store</option>
-                                            <option value="product">
-                                              Product
-                                            </option>
-                                            <option value="page">Page</option>
-                                          </Form.Control>
-                                        </Form.Group>
-                                      </Col>
-                                    </Row>
-                                  );
-                                }
-                              )
-                            : <p>No data available </p>}
+                                  <Col>
+                                    <Form.Group controlId="exampleForm.ControlSelect1">
+                                      <Form.Label>Type select</Form.Label>
+                                      <Form.Control
+                                        name="typeSelected"
+                                        //onChange={this.onChangeUpdate}
+                                        //value={this.state.typeSelected}
+                                        as="select"
+                                      >
+                                        <option value="">Type select</option>
+                                        <option value={0}>Store</option>
+                                        <option value={1}>Product</option>
+                                        <option value={2}>Page</option>
+                                      </Form.Control>
+                                    </Form.Group>
+                                  </Col>
+                                </Row>
+                              );
+                            })
+                          ) : (
+                            <p>No data available </p>
+                          )}
                         </div>
-                        
+
                         <div className="checked_category">
                           <p className="checked">Checked Category</p>
-                          {this.state.checkedArrayShow.length > 0
-                            ? this.state.checkedArrayShow.map(
-                                (values, index) => {
-                                  return (
-                                    <Row>
-                                      <Col>
-                                        <Form.Group controlId="exampleForm.ControlInput1">
-                                          <Form.Label>Name category</Form.Label>
-                                          <Form.Control
-                                            type="text"
-                                            name="name"
-                                            // value={this.state.name}
-                                            value={values.name}
-                                            onChange={this.onChange}
-                                            placeholder="input category..."
-                                          />
-                                        </Form.Group>
-                                      </Col>
+                          {checkedArrayShow.length > 0 ? (
+                            checkedArrayShow.map((values, index) => {
+                              return (
+                                <Row>
+                                  <Col>
+                                    <Form.Group controlId="exampleForm.ControlInput1">
+                                      <Form.Label>Name category</Form.Label>
+                                      <Form.Control
+                                        type="text"
+                                        //name="nameUpdate"
+                                        //value={this.state.nameUpdate}
+                                        value={values.name}
+                                        //onChange={this.onChangeUpdate}
+                                        onChange={(e) =>
+                                          this.handleCategoryInput(
+                                            "name",
+                                            e.target.value,
+                                            index,
+                                            "checked"
+                                          )
+                                        }
+                                        placeholder="input category..."
+                                      />
+                                    </Form.Group>
+                                  </Col>
 
-                                      <Col>
-                                        <Form.Group controlId="exampleForm.ControlSelect1">
-                                          <Form.Label>
-                                            Category select
-                                          </Form.Label>
-                                          <Form.Control
-                                            name="idParent"
-                                            onChange={this.onChange}
-                                            //value={this.state.idParent}
-                                            value={values.idParent}
-                                            as="select"
-                                          >
-                                            <option>category select</option>
-                                            {category1.map((values, index) => {
-                                              return (
-                                                <option
-                                                  key={index}
-                                                  value={values.id}
-                                                >
-                                                  {values.name}
-                                                </option>
-                                              );
-                                            })}
-                                          </Form.Control>
-                                        </Form.Group>
-                                      </Col>
+                                  <Col>
+                                    <Form.Group controlId="exampleForm.ControlSelect1">
+                                      <Form.Label>Category select</Form.Label>
+                                      <Form.Control
+                                        onChange={(e) =>
+                                          this.handleCategoryInput(
+                                            "idParent",
+                                            e.target.value,
+                                            index,
+                                            "checked"
+                                          )
+                                        }
+                                        //value={this.state.idParent}
+                                        value={values.idParent}
+                                        as="select"
+                                      >
+                                        <option>category select</option>
+                                        {category1.map((values, index) => {
+                                          return (
+                                            <option
+                                              key={index}
+                                              value={values.id}
+                                            >
+                                              {values.name}
+                                            </option>
+                                          );
+                                        })}
+                                      </Form.Control>
+                                    </Form.Group>
+                                  </Col>
 
-                                      <Col>
-                                        <Form.Group controlId="exampleForm.ControlSelect1">
-                                          <Form.Label>Type select</Form.Label>
-                                          <Form.Control
-                                            name="idParent"
-                                            onChange={this.onChange}
-                                            value={this.state.idParent}
-                                            as="select"
-                                          >
-                                            <option value="">
-                                              Type select
-                                            </option>
-                                            <option value="store">Store</option>
-                                            <option value="product">
-                                              Product
-                                            </option>
-                                            <option value="page">Page</option>
-                                          </Form.Control>
-                                        </Form.Group>
-                                      </Col>
-                                    </Row>
-                                  );
-                                }
-                              )
-                            : <p>No data available </p>}
+                                  <Col>
+                                    <Form.Group controlId="exampleForm.ControlSelect1">
+                                      <Form.Label>Type select</Form.Label>
+                                      <Form.Control
+                                        name="typeSelected"
+                                        //onChange={this.onChangeUpdate}
+                                        //value={this.state.typeSelected}
+                                        as="select"
+                                      >
+                                        <option value="">Type select</option>
+                                        <option value={0}>Store</option>
+                                        <option value={1}>Product</option>
+                                        <option value={2}>Page</option>
+                                      </Form.Control>
+                                    </Form.Group>
+                                  </Col>
+                                </Row>
+                              );
+                            })
+                          ) : (
+                            <p>No data available </p>
+                          )}
                         </div>
                         <Modal.Footer>
                           <Button
@@ -607,6 +700,9 @@ const mapDispatchToProps = (dispatch, props) => {
     onAddCategory: (data) => {
       dispatch(actions.categoryADD(data));
     },
+    onUpdateCategory : (data) => {
+      dispatch(actions.updateCategoryAPI(data));
+    }
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(category);
