@@ -28,6 +28,20 @@ var category = (state = initialState, action) => {
       // state = result;
       return [...state];
     }
+    case types.authConstants.DELETE_CATEGORY: {
+      var {id} = action;
+      var data = [...state];
+      console.log(id);
+      console.log(data);
+      var result = data.filter((values, index) => {
+        if(values.id !== id.id) {
+          return values;
+        }
+      });
+      console.log(result);
+      state = result;
+      return [...state];
+    }
     default: return state;
   }
 };

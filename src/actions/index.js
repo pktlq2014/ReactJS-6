@@ -148,3 +148,23 @@ export const updateCategoryReducers = (category) => {
         category : category
     }
 }
+// xóa data server từ UI
+export const deleteCategoryAPI = (id) => {
+    return (dispatch) => {
+        // thời gian lấy dữ liệu từ server về lâu hơn thời gian lấy dữ liệu 
+        // rồi truyền vào dispatch, nên sinh ra lỗi middleware
+        // hay nói cách khác là khi truyền dữ liệu từ server vào dispatch nhanh quá
+        // lúc này chưa có dữ liệu để truyền vào dispatch
+        // middleware là lớp nằm giữa reducers và dispatch actions
+        // giúp fetch dữ liệu xong mới dispatch actions
+        return API(`category/${id}`, 'DELETE', null).then(res => {
+            dispatch(deleteCategoryReducers(res.data));
+        });
+    }
+}
+export const deleteCategoryReducers = (id) => {
+    return {
+        type : types.authConstants.DELETE_CATEGORY,
+        id : id
+    }
+}

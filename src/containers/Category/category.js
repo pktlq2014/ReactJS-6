@@ -89,17 +89,61 @@ class category extends Component {
       checkedArrayShow: [],
       expandedArrayShow: [],
       typeSelected: 0,
-      arrayUpdate : [],
-      dataUpdate : {
-        id : '',
-        name : '',
-        idParent : ''
+      arrayUpdate: [],
+      dataUpdate: {
+        id: "",
+        name: "",
+        idParent: "",
       },
-      idUpdate : '',
-      nameUpdate : '',
-      idParentUpdate : ''
+      idUpdate: "",
+      nameUpdate: "",
+      idParentUpdate: "",
+      showDelete: false,
+      arrayDelete: [],
     };
   }
+  showDeleteName = () => {
+    var {category1} = this.props;
+    var deleteName = [];
+    category1.forEach((values, index) => {
+      this.state.checked.forEach((valuess, index) => {
+        if (values.id === valuess) {
+          console.log(values.name);
+          deleteName.push(values);
+        }
+      });
+    })
+    // if(!this.state.arrayDelete) {
+    //   this.setState({
+    //     arrayDelete : deleteName
+    //   })
+    // }
+    console.log(deleteName);
+    console.log(this.state.arrayDelete);
+    var result = deleteName.map((values, index) => {
+      return <h6 key={index}>{values.name}</h6>;
+    })
+    return result;
+  }
+  hiddenDelete = () => {
+    this.setState({
+      showDelete: false,
+    });
+    var {category1} = this.props;
+    var arrayDelete = [];
+    category1.forEach((values, index) => {
+      this.state.checked.forEach((valuess, index) => {
+        if (values.id === valuess) {
+          console.log(values.name);
+          arrayDelete.push(values);
+        }
+      });
+    })
+    console.log(arrayDelete);
+    arrayDelete.forEach((values, index) => {
+      this.props.onDeleteCategory(values.id);
+    })
+  };
   renderAddCategoryModal = (category1) => {
     return (
       <Modal
@@ -174,7 +218,7 @@ class category extends Component {
         </Modal.Body>
       </Modal>
     );
-  }
+  };
   handleCategoryInput = (key, value, index, type) => {
     var { checkedArrayShow, expandedArrayShow } = this.state;
     console.log(checkedArrayShow);
@@ -230,7 +274,7 @@ class category extends Component {
     e.preventDefault();
     console.log(this.state);
     var array = [];
-    var {checkedArrayShow, expandedArrayShow} = this.state;
+    var { checkedArrayShow, expandedArrayShow } = this.state;
     console.log(checkedArrayShow);
     console.log(expandedArrayShow);
     checkedArrayShow.forEach((values, index) => {
@@ -251,10 +295,10 @@ class category extends Component {
       //   }
       // });
       var result = {
-        id : values.id,
-        name : values.name,
-        idParent : values.idParent
-      }
+        id: values.id,
+        name: values.name,
+        idParent: values.idParent,
+      };
       console.log(result);
       this.props.onUpdateCategory(result);
     });
@@ -317,8 +361,7 @@ class category extends Component {
   };
   setModalShowCategoryDelete = () => {
     this.setState({
-      modalShow: true,
-      temp: 2,
+      showDelete: true,
     });
     console.log(this.state.checked);
     console.log(this.state.expanded);
@@ -412,7 +455,8 @@ class category extends Component {
     // api data từ cateroty đang ở dạng thẳng, phải filter qua lọc qua và
     // dùng đệ quy để lọc và hiển thị con theo cha
     var { category1 } = this.props;
-    var { checkedArrayShow, expandedArrayShow } = this.state;
+    var deleteName = [];
+    var { checkedArrayShow, expandedArrayShow, arrayDelete } = this.state;
     //var test = [...category];
     // lọc và hiển thị lại array sau khi nhận từ api
     // sắp xếp json theo dạng cha-con
@@ -433,8 +477,27 @@ class category extends Component {
                     </Button>
                   </div>
                   {this.renderAddCategoryModal(category1)}
-
-                  {/* Edit */}
+                  {/* delete */}
+                  <Modal
+                    show={this.state.showDelete}
+                    onHide={this.hiddenDelete}
+                  >
+                    <Modal.Header closeButton>
+                      <Modal.Title>Are you sure delete category?</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      {this.showDeleteName()}
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button variant="primary" onClick={this.hiddenDelete}>
+                        Save Changes
+                      </Button>
+                      <Button variant="secondary" onClick={this.hiddenDelete}>
+                        Close
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
+                  ;{/* Edit */}
                   <Modal
                     show={this.state.updateCategory}
                     onHide={this.updateCategory}
@@ -700,8 +763,11 @@ const mapDispatchToProps = (dispatch, props) => {
     onAddCategory: (data) => {
       dispatch(actions.categoryADD(data));
     },
-    onUpdateCategory : (data) => {
+    onUpdateCategory: (data) => {
       dispatch(actions.updateCategoryAPI(data));
+    },
+    onDeleteCategory : (id) => {
+      dispatch(actions.deleteCategoryAPI(id));
     }
   };
 };
