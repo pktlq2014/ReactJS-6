@@ -11,6 +11,9 @@ import CheckBox from "@material-ui/icons/CheckBox";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import KeyboardArrowDown from "@material-ui/icons/KeyboardArrowDown";
 import CheckBoxOutlineBlank from "@material-ui/icons/CheckBoxOutlineBlank";
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import "react-checkbox-tree/lib/react-checkbox-tree.css";
 function MyVerticallyCenteredModal(props) {
   return (
@@ -103,7 +106,7 @@ class category extends Component {
     };
   }
   showDeleteName = () => {
-    var {category1} = this.props;
+    var { category1 } = this.props;
     var deleteName = [];
     category1.forEach((values, index) => {
       this.state.checked.forEach((valuess, index) => {
@@ -112,7 +115,7 @@ class category extends Component {
           deleteName.push(values);
         }
       });
-    })
+    });
     // if(!this.state.arrayDelete) {
     //   this.setState({
     //     arrayDelete : deleteName
@@ -122,14 +125,14 @@ class category extends Component {
     console.log(this.state.arrayDelete);
     var result = deleteName.map((values, index) => {
       return <h6 key={index}>{values.name}</h6>;
-    })
+    });
     return result;
-  }
-  hiddenDelete = () => {
+  };
+  hiddenDeleteAccess = () => {
     this.setState({
       showDelete: false,
     });
-    var {category1} = this.props;
+    var { category1 } = this.props;
     var arrayDelete = [];
     category1.forEach((values, index) => {
       this.state.checked.forEach((valuess, index) => {
@@ -138,11 +141,16 @@ class category extends Component {
           arrayDelete.push(values);
         }
       });
-    })
+    });
     console.log(arrayDelete);
     arrayDelete.forEach((values, index) => {
       this.props.onDeleteCategory(values.id);
-    })
+    });
+  };
+  hiddenDelete = () => {
+    this.setState({
+      showDelete: false,
+    });
   };
   renderAddCategoryModal = (category1) => {
     return (
@@ -472,9 +480,33 @@ class category extends Component {
                 <Col md={12}>
                   <div className="category">
                     <h3>Add Category</h3>
-                    <Button onClick={this.setModalShow} variant="success">
-                      Add Category
-                    </Button>
+                    <div class="actions_btn">
+                      <span className="actions_btn-child">Actions: </span>
+                      <Button
+                        className="actions_btn-child"
+                        onClick={this.setModalShow}
+                        variant="success"
+                      >
+                        <AddCircleOutlineIcon className="category_icon"/>
+                        <span className="title_btn">Add Category</span>
+                      </Button>
+                      <Button
+                        className="actions_btn-child"
+                        onClick={this.setModalShowCategory}
+                        variant="primary"
+                      >
+                        <EditIcon className="category_icon"/>
+                        <span className="title_btn">Update Category</span>
+                      </Button>
+                      <Button
+                        className="actions_btn-child"
+                        onClick={this.setModalShowCategoryDelete}
+                        variant="danger"
+                      >
+                        <DeleteForeverIcon className="category_icon"/>
+                        <span className="title_btn">Delete Category</span>
+                      </Button>
+                    </div>
                   </div>
                   {this.renderAddCategoryModal(category1)}
                   {/* delete */}
@@ -486,10 +518,20 @@ class category extends Component {
                       <Modal.Title>Are you sure delete category?</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                      {this.showDeleteName()}
+                      {
+                        // this.showDeleteName()
+                        this.state.checked.length > 0 ? (
+                          this.showDeleteName()
+                        ) : (
+                          <h6>No data available </h6>
+                        )
+                      }
                     </Modal.Body>
                     <Modal.Footer>
-                      <Button variant="primary" onClick={this.hiddenDelete}>
+                      <Button
+                        variant="primary"
+                        onClick={this.hiddenDeleteAccess}
+                      >
                         Save Changes
                       </Button>
                       <Button variant="secondary" onClick={this.hiddenDelete}>
@@ -497,7 +539,7 @@ class category extends Component {
                       </Button>
                     </Modal.Footer>
                   </Modal>
-                  ;{/* Edit */}
+                  {/* Edit */}
                   <Modal
                     show={this.state.updateCategory}
                     onHide={this.updateCategory}
@@ -714,15 +756,6 @@ class category extends Component {
               <Row>
                 <Col className="edit_category">
                   <h3>Edit Category</h3>
-                  <Button onClick={this.setModalShowCategory} variant="primary">
-                    Update Category
-                  </Button>
-                  <Button
-                    onClick={this.setModalShowCategoryDelete}
-                    variant="danger"
-                  >
-                    Delete Category
-                  </Button>
                 </Col>
               </Row>
               <Row>
@@ -766,9 +799,9 @@ const mapDispatchToProps = (dispatch, props) => {
     onUpdateCategory: (data) => {
       dispatch(actions.updateCategoryAPI(data));
     },
-    onDeleteCategory : (id) => {
+    onDeleteCategory: (id) => {
       dispatch(actions.deleteCategoryAPI(id));
-    }
+    },
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(category);

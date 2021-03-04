@@ -30,3 +30,34 @@
   font-weight: 600;
   font-size: 1.1rem;
 }
+div.edit_category span {
+  font-weight: 600;
+  font-size: 1.75rem;
+}
+.actions_btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: 1.75rem;
+}
+.actions_btn-child {
+  margin-left: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.actions_btn .category_icon {
+  font-size: 1.25rem;
+  margin-right: 0.25rem;
+  margin-top: 0;
+  padding-top: 0;
+  top: 0;
+}
+.actions_btn-child span.title_btn {
+
+}
+.actions_btn > span {
+  font-size: 1.25rem;
+}
