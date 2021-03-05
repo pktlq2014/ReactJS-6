@@ -11,9 +11,9 @@ import CheckBox from "@material-ui/icons/CheckBox";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import KeyboardArrowDown from "@material-ui/icons/KeyboardArrowDown";
 import CheckBoxOutlineBlank from "@material-ui/icons/CheckBoxOutlineBlank";
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
+import EditIcon from "@material-ui/icons/Edit";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import "react-checkbox-tree/lib/react-checkbox-tree.css";
 function MyVerticallyCenteredModal(props) {
   return (
@@ -290,6 +290,7 @@ class category extends Component {
       console.log(values.id);
       console.log(values.idParent);
       console.log(values.name);
+      console.log(values.type);
       // this.setState({
       //   idUpdate : values.id,
       //   nameUpdate : values.name,
@@ -306,6 +307,7 @@ class category extends Component {
         id: values.id,
         name: values.name,
         idParent: values.idParent,
+        type: values.type,
       };
       console.log(result);
       this.props.onUpdateCategory(result);
@@ -487,7 +489,7 @@ class category extends Component {
                         onClick={this.setModalShow}
                         variant="success"
                       >
-                        <AddCircleOutlineIcon className="category_icon"/>
+                        <AddCircleOutlineIcon className="category_icon" />
                         <span className="title_btn">Add Category</span>
                       </Button>
                       <Button
@@ -495,7 +497,7 @@ class category extends Component {
                         onClick={this.setModalShowCategory}
                         variant="primary"
                       >
-                        <EditIcon className="category_icon"/>
+                        <EditIcon className="category_icon" />
                         <span className="title_btn">Update Category</span>
                       </Button>
                       <Button
@@ -503,7 +505,7 @@ class category extends Component {
                         onClick={this.setModalShowCategoryDelete}
                         variant="danger"
                       >
-                        <DeleteForeverIcon className="category_icon"/>
+                        <DeleteForeverIcon className="category_icon" />
                         <span className="title_btn">Delete Category</span>
                       </Button>
                     </div>
@@ -556,6 +558,7 @@ class category extends Component {
                       <Form onSubmit={this.onSubmitUpdate}>
                         <div className="expanded_category">
                           <p className="expanded">Expanded Category</p>
+                          {console.log(expandedArrayShow)}
                           {expandedArrayShow.length > 0 ? (
                             expandedArrayShow.map((values, index) => {
                               return (
@@ -617,14 +620,21 @@ class category extends Component {
                                       <Form.Label>Type select</Form.Label>
                                       <Form.Control
                                         name="typeSelected"
-                                        //onChange={this.onChangeUpdate}
-                                        //value={this.state.typeSelected}
+                                        onChange={(e) =>
+                                          this.handleCategoryInput(
+                                            "type",
+                                            e.target.value,
+                                            index,
+                                            "expanded"
+                                          )
+                                        }
+                                        value={values.type}
                                         as="select"
                                       >
                                         <option value="">Type select</option>
-                                        <option value={0}>Store</option>
-                                        <option value={1}>Product</option>
-                                        <option value={2}>Page</option>
+                                        <option value="store">Store</option>
+                                        <option value="product">Product</option>
+                                        <option value="page">Page</option>
                                       </Form.Control>
                                     </Form.Group>
                                   </Col>
@@ -700,14 +710,21 @@ class category extends Component {
                                       <Form.Label>Type select</Form.Label>
                                       <Form.Control
                                         name="typeSelected"
-                                        //onChange={this.onChangeUpdate}
-                                        //value={this.state.typeSelected}
+                                        onChange={(e) =>
+                                          this.handleCategoryInput(
+                                            "type",
+                                            e.target.value,
+                                            index,
+                                            "checked"
+                                          )
+                                        }
+                                        value={values.type}
                                         as="select"
                                       >
                                         <option value="">Type select</option>
-                                        <option value={0}>Store</option>
-                                        <option value={1}>Product</option>
-                                        <option value={2}>Page</option>
+                                        <option value="store">Store</option>
+                                        <option value="product">Product</option>
+                                        <option value="page">Page</option>
                                       </Form.Control>
                                     </Form.Group>
                                   </Col>

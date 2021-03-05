@@ -22,6 +22,7 @@ var category = (state = initialState, action) => {
           values.id = action.category.id;
           values.name = action.category.name;
           values.idParent = action.category.idParent;
+          values.type = action.category.type;
         }
       }); 
       console.log(state);

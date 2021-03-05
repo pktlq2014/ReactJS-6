@@ -10,6 +10,9 @@ class sidebar extends Component {
           <NavLink exact to="/">Home</NavLink>
         </li>
         <li>
+          <NavLink exact to="/page">Page</NavLink>
+        </li>
+        <li>
           <NavLink to="/products">Products</NavLink>
         </li>
         <li>

@@ -3,14 +3,14 @@ import { Row, Col, Container } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import SideBar from "./../../components/SideBar/sidebar";
 import "./styles.css";
-class Home extends Component {
+class Page extends Component {
   render() {
     return (
       <Container fluid>
         <Row className="side_bar">
           <SideBar />
           <Col md={10} className="side_bar-marginLeft">
-            Home123
+            Page1111
           </Col>
         </Row>
       </Container>
@@ -18,4 +18,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default Page;
