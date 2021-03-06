@@ -103,6 +103,7 @@ class category extends Component {
       idParentUpdate: "",
       showDelete: false,
       arrayDelete: [],
+      type : ""
     };
   }
   showDeleteName = () => {
@@ -207,6 +208,20 @@ class category extends Component {
                 })}
               </Form.Control>
             </Form.Group>
+            <Form.Group controlId="exampleForm.ControlSelect1">
+              <Form.Label>Type select</Form.Label>
+              <Form.Control
+                name="type"
+                onChange={this.onChange}
+                value={this.state.type}
+                as="select"
+              >
+                <option value="">Type select</option>
+                <option value="store">Store</option>
+                <option value="product">Product</option>
+                <option value="page">Page</option>
+              </Form.Control>
+            </Form.Group>
             {/* <Form.Group> */}
             {/* <Form.File
                           type="file"
@@ -270,12 +285,14 @@ class category extends Component {
       idParent: this.state.idParent,
       name: this.state.name,
       image: this.state.image,
+      type: this.state.type
     };
     this.props.onAddCategory(data);
     this.setState({
       idParent: "",
       name: "",
       image: "",
+      type: ""
     });
   };
   onSubmitUpdate = (e) => {
@@ -465,6 +482,7 @@ class category extends Component {
     // api data từ cateroty đang ở dạng thẳng, phải filter qua lọc qua và
     // dùng đệ quy để lọc và hiển thị con theo cha
     var { category1 } = this.props;
+    var result = this.getOptionMenu(category1);
     var deleteName = [];
     var { checkedArrayShow, expandedArrayShow, arrayDelete } = this.state;
     //var test = [...category];
@@ -600,7 +618,7 @@ class category extends Component {
                                         value={values.idParent}
                                         as="select"
                                       >
-                                        <option>category select</option>
+                                        <option value="">category select</option>
                                         {category1.map((values, index) => {
                                           return (
                                             <option
@@ -690,7 +708,7 @@ class category extends Component {
                                         value={values.idParent}
                                         as="select"
                                       >
-                                        <option>category select</option>
+                                        <option value="">category select</option>
                                         {category1.map((values, index) => {
                                           return (
                                             <option

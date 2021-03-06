@@ -112,10 +112,10 @@ class products extends Component {
           <td>{values.id}</td>
           <td className="width-10">{values.name}</td>
           <td className="width-10">{values.price}</td>
-          <td className="width-5">{values.quantity}</td>
-          <td className="width-20">{values.description}</td>
-          <td className="width-5">{values.categoryID}</td>
-          <td className="width-10">
+          <td>{values.quantity}</td>
+          <td className="width-90">{values.description}</td>
+          <td>{values.categoryID}</td>
+          <td className="width-15">
             {
               values.productPictures.map((valuess, index) => {
                 var image = require(`./../../assets/images/${valuess.img}`)
@@ -131,6 +131,8 @@ class products extends Component {
               })
             }
           </td>
+          <td className="width-5">{values.sales}</td>
+          <td className="width-5">{values.star}</td>
         </tr>
       );
     });
@@ -284,6 +286,8 @@ class products extends Component {
                         <th>Description</th>
                         <th>CategoryID</th>
                         <th>ProductPicture</th>
+                        <th>Sales</th>
+                        <th>Star</th>
                       </tr>
                     </thead>
                     <tbody>{data}</tbody>
