@@ -14,50 +14,28 @@
 .textAlign-justify {
   text-align: justify;
 }
-.category {
-  display: flex;
-  justify-content: space-between;
+.img {
+  image-rendering: pixelated;
+  width: 4rem;
+  height: 4rem;
+  object-fit: contain;
+  filter: drop-shadow(0 0 5px blue);
 }
-.edit_category {
-  display: flex;
-  justify-content: space-between;
+.textAlign-center {
+  text-align: justify;
 }
-.expanded_category p.expanded {
-  font-weight: 600;
-  font-size: 1.1rem;
+.width-10 {
+  width: 10rem;
 }
-.checked_category p.checked {
-  font-weight: 600;
-  font-size: 1.1rem;
+.width-40 {
+  width: 40rem;
 }
-div.edit_category span {
-  font-weight: 600;
-  font-size: 1.75rem;
+.width-90 {
+  width: 90rem;
 }
-.actions_btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: 600;
-  font-size: 1.75rem;
+.width-5 {
+  width: 5rem;
 }
-.actions_btn-child {
-  margin-left: 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-.actions_btn .category_icon {
-  font-size: 1.25rem;
-  margin-right: 0.25rem;
-  margin-top: 0;
-  padding-top: 0;
-  top: 0;
-}
-.actions_btn-child span.title_btn {
-
-}
-.actions_btn > span {
-  font-size: 1.25rem;
+.width-15 {
+  width: 15rem;
 }
