@@ -86,11 +86,11 @@ class products extends Component {
     var picturesBanner = this.state.bannerPictures;
     picturesProduct.forEach((values, index) => {
       console.log(values);
-      arrayProduct.push({ id: values.lastModified, img: values.name });
+      arrayProduct.push({ id: values.lastModified, img: values.name, navigateTo: `/productClicked?categoryId=${values.lastModified}&type=${values.type}` });
     });
     picturesBanner.forEach((values, index) => {
       console.log(values);
-      arrayBanner.push({ id: values.lastModified, img: values.name });
+      arrayBanner.push({ id: values.lastModified, img: values.name, navigateTo: `/bannerClicked?categoryId=${values.lastModified}&type=${values.type}` });
     });
 
     var data = {
@@ -103,6 +103,15 @@ class products extends Component {
       products: arrayProduct,
     };
     this.props.onPageAPI(data);
+    this.setState({
+      categoryID: "",
+      title: "",
+      description: "",
+      imageBanner: "",
+      imageProduct: "",
+      productPictures: [],
+      bannerPictures: [],
+    });
   };
   setModalShow = () => {
     this.setState({

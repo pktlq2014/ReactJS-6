@@ -90,6 +90,18 @@ class products extends Component {
       productPictures: array,
     };
     this.props.onProductAPI(data);
+    this.setState({
+      name: "",
+      price: "",
+      quantity: "",
+      description: "",
+      categoryID: "",
+      star: "",
+      sales: "",
+      image: "",
+      productPictures: [],
+      array: [],
+    });
   };
   setModalShow = () => {
     this.setState({
