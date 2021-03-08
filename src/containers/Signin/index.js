@@ -55,7 +55,7 @@ class Signin extends Component {
       if (
         values.email === this.state.email &&
         this.state.onSubmit === 1 &&
-        values.password === this.state.password
+        values.password === this.state.password && values.role === 'admin'
       ) {
         const user = {
           email: this.state.email,

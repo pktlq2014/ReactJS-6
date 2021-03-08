@@ -29,6 +29,7 @@ class Signup extends Component {
   };
   onSubmit = (e) => {
     e.preventDefault();
+    console.log(this.state);
     var { firstname, lastname, email, password } = this.state;
     if (
       firstname !== "" &&
@@ -38,7 +39,7 @@ class Signup extends Component {
     ) {
       var { login } = this.props;
       console.log(login);
-      login.forEach((values, index) => {
+      login && login.length > 0 && login.forEach((values, index) => {
         if (values.email === email) {
           alert("Email Đã Được Đăng Ký. Xin Vui Lòng Nhập Email Khác!!!");
         } else {
@@ -47,7 +48,9 @@ class Signup extends Component {
             lastname: lastname,
             email: email,
             password: password,
+            role: 'admin'
           };
+          console.log(data);
           this.props.onSignup(data);
           this.setState({
             onSubmit: 1,
