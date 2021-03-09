@@ -13,7 +13,8 @@ var login = (state = initialState, action) => {
         case types.authConstants.SIGNOUT: {
             console.log(action);
             if(action.data === 0) {
-                localStorage.clear();
+                //localStorage.clear();
+                localStorage.removeItem('dataLogin');
                 state = null;
             }
             return state;

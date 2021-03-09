@@ -67,6 +67,8 @@ class Signin extends Component {
         if (this.state.onSubmit === 1) {
           this.setState({
             onSubmit: 0,
+            password : '',
+            email : ''
           });
         }
       }
