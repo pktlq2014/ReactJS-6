@@ -36,6 +36,7 @@
 .width-5 {
   width: 5rem;
 }
-.width-15 {
-  width: 15rem;
+.width-15-notification {
+  text-align: center;
+  width: 5rem;
 }

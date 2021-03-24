@@ -19,6 +19,7 @@ class products extends Component {
     this.state = {
       modalShow: false,
       categoryID: "",
+      parentID: "",
       name: "",
       quantity: "",
       price: "",
@@ -84,6 +85,7 @@ class products extends Component {
       quantity: this.state.quantity,
       description: this.state.description,
       categoryID: this.state.categoryID,
+      parentID: this.state.parentID,
       star: this.state.star,
       sales: this.state.sales,
       image: this.state.image,
@@ -96,6 +98,7 @@ class products extends Component {
       quantity: "",
       description: "",
       categoryID: "",
+      parentID: "",
       star: "",
       sales: "",
       image: "",
@@ -127,6 +130,7 @@ class products extends Component {
           <td>{values.quantity}</td>
           <td className="width-90">{values.description}</td>
           <td>{values.categoryID}</td>
+          <td>{values.parentID}</td>
           <td className="width-15">
             {
               values.productPictures.map((valuess, index) => {
@@ -256,6 +260,26 @@ class products extends Component {
                               )}
                             </Form.Control>
                           </Form.Group>
+                          <Form.Group controlId="exampleForm.ControlSelect1">
+                            <Form.Label>Parent select</Form.Label>
+                            <Form.Control
+                              name="parentID"
+                              onChange={this.onChange}
+                              value={this.state.parentID}
+                              as="select"
+                            >
+                              <option>parent select</option>
+                              {this.getOptionMenu(category).map(
+                                (values, index) => {
+                                  return (
+                                    <option key={index} value={values.id}>
+                                      {values.name}
+                                    </option>
+                                  );
+                                }
+                              )}
+                            </Form.Control>
+                          </Form.Group>
                           {this.state.productPictures.length > 0
                             ? this.state.productPictures.map(
                                 (values, index) => {
@@ -297,6 +321,7 @@ class products extends Component {
                         <th>Quantity</th>
                         <th>Description</th>
                         <th>CategoryID</th>
+                        <th>ParentID</th>
                         <th>ProductPicture</th>
                         <th>Sales</th>
                         <th>Star</th>

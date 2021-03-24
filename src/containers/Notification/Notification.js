@@ -11,56 +11,26 @@ import {
 import { NavLink } from "react-router-dom";
 import "./styles.css";
 import { connect } from "react-redux";
-import * as actions from "./../../actions/index";
-import SideBar from "./../../components/SideBar/sidebar";
-class products extends Component {
+import * as actions from "../../actions/index";
+import SideBar from "../../components/SideBar/sidebar";
+class Notification extends Component {
   constructor(props) {
     super(props);
     this.state = {
       modalShow: false,
-      categoryID: "",
       title: "",
       description: "",
-      productPictures: [],
-      bannerPictures: [],
-      imageBanner: "",
-      imageProduct: "",
+      imageNotificationArray: [],
+      imageNotification: "",
     };
   }
   componentDidMount() {
-    this.props.onShowPage();
-    this.props.onShowCategory();
+    this.props.onNotificationShow();
   }
-  getOptionMenu = (categories, options1 = []) => {
-    // ép phẳng json về, sau đó dùng option hiển thị ra 1 lượt là xong
-    categories.forEach((item, index) => {
-      // giả sử không có proptery children hoặc length nó = 0
-      if (!item.children || item.children.length === 0) {
-        options1.push({ id: item.id, name: item.name });
-      } else {
-        options1.push({ id: item.id, name: item.name });
-        this.getOptionMenu(item.children, options1);
-      }
-    });
-    console.log(options1);
-    return options1;
-  };
-  onChangeImageBanner = (e) => {
-    var data = [...this.state.bannerPictures, e.target.files[0]];
+  onChangeImageNotification = (e) => {
+    var data = [...this.state.imageNotificationArray, e.target.files[0]];
     this.setState({
-      bannerPictures: data,
-    });
-    var { target } = e;
-    var name = target.name;
-    var value = target.value;
-    this.setState({
-      [name]: value,
-    });
-  };
-  onChangeImageProduct = (e) => {
-    var data = [...this.state.productPictures, e.target.files[0]];
-    this.setState({
-      productPictures: data,
+      imageNotificationArray: data,
     });
     var { target } = e;
     var name = target.name;
@@ -80,37 +50,24 @@ class products extends Component {
   onSubmit = (e) => {
     e.preventDefault();
     console.log(this.state);
-    var arrayProduct = [];
-    var arrayBanner = [];
-    var picturesProduct = this.state.productPictures;
-    var picturesBanner = this.state.bannerPictures;
+    var array = [];
+    var picturesProduct = this.state.imageNotificationArray;
     picturesProduct.forEach((values, index) => {
       console.log(values);
-      arrayProduct.push({ id: values.lastModified, img: values.name, navigateTo: `/productClicked?categoryId=${values.lastModified}&type=${values.type}` });
+      array.push({ id: values.lastModified, img: values.name });
     });
-    picturesBanner.forEach((values, index) => {
-      console.log(values);
-      arrayBanner.push({ id: values.lastModified, img: values.name, navigateTo: `/bannerClicked?categoryId=${values.lastModified}&type=${values.type}` });
-    });
-
     var data = {
-      category: this.state.categoryID,
       title: this.state.title,
       description: this.state.description,
-      imageBanner: this.state.imageBanner,
-      imageProduct: this.state.imageProduct,
-      banners: arrayBanner,
-      products: arrayProduct,
+      notification: this.state.imageNotification,
+      notificationArray: array,
     };
-    this.props.onPageAPI(data);
+    this.props.onNotification(data);
     this.setState({
-      categoryID: "",
       title: "",
       description: "",
-      imageBanner: "",
-      imageProduct: "",
-      productPictures: [],
-      bannerPictures: [],
+      imageNotification: "",
+      imageNotificationArray: [],
     });
   };
   setModalShow = () => {
@@ -124,35 +81,19 @@ class products extends Component {
     });
   };
   render() {
-    var { category, page } = this.props;
-    console.log(page);
+    var { notification } = this.props;
+    console.log(notification);
     // console.log(category);
     // console.log(showProduct);
-    //var image = require(`./images/truoc.jpg`);
-    var data = page.map((values, index) => {
+    var data = notification.map((values, index) => {
       return (
         <tr key={index} className="textAlign-center">
           <td>{values.id}</td>
-          <td>{values.category}</td>
           <td className="width-40">{values.title}</td>
           <td className="width-90">{values.description}</td>
-          <td className="width-15">
-            {values.products.map((valuess, index) => {
+          <td className="width-15-notification">
+            {values.notificationArray.map((valuess, index) => {
               var image = require(`./../../assets/images/${valuess.img}`);
-              return (
-                <img
-                  key={index}
-                  className="img"
-                  //src={`${process.env.PUBLIC_URL}/${truoc}`}
-                  src={image.default}
-                  alt="logo"
-                />
-              );
-            })}
-          </td>
-          <td className="width-15">
-            {values.banners.map((valuesss, index) => {
-              var image = require(`./../../assets/images/${valuesss.img}`);
               return (
                 <img
                   key={index}
@@ -176,9 +117,9 @@ class products extends Component {
               <Row>
                 <Col md={12}>
                   <div className="category">
-                    <h3>Type</h3>
+                    <h3>Notification</h3>
                     <Button onClick={this.setModalShow} variant="success">
-                      Add Type
+                      Add Notification
                     </Button>
 
                     <Modal
@@ -190,7 +131,7 @@ class products extends Component {
                     >
                       <Modal.Header closeButton>
                         <Modal.Title id="contained-modal-title-vcenter">
-                          Add New Type
+                          Add New Notification
                         </Modal.Title>
                       </Modal.Header>
                       <Modal.Body>
@@ -215,40 +156,8 @@ class products extends Component {
                               placeholder="description..."
                             />
                           </Form.Group>
-                          <Form.Group controlId="exampleForm.ControlSelect1">
-                            <Form.Label>Category select</Form.Label>
-                            <Form.Control
-                              name="categoryID"
-                              onChange={this.onChange}
-                              value={this.state.categoryID}
-                              as="select"
-                            >
-                              <option>category select</option>
-                              {this.getOptionMenu(category).map(
-                                (values, index) => {
-                                  return (
-                                    <option key={index} value={values.id}>
-                                      {values.name}
-                                    </option>
-                                  );
-                                }
-                              )}
-                            </Form.Control>
-                          </Form.Group>
-                          {this.state.bannerPictures.length > 0
-                            ? this.state.bannerPictures.map((values, index) => {
-                                return <div key={index}>{values.name}</div>;
-                              })
-                            : null}
-                          <Form.File
-                            type="file"
-                            name="imageBanner"
-                            onChange={this.onChangeImageBanner}
-                            id="exampleFormControlFile1"
-                            label="Picture banner input"
-                          />
-                          {this.state.productPictures.length > 0
-                            ? this.state.productPictures.map(
+                          {this.state.imageNotificationArray.length > 0
+                            ? this.state.imageNotificationArray.map(
                                 (values, index) => {
                                   return <div key={index}>{values.name}</div>;
                                 }
@@ -256,10 +165,10 @@ class products extends Component {
                             : null}
                           <Form.File
                             type="file"
-                            name="imageProduct"
-                            onChange={this.onChangeImageProduct}
-                            id="exampleFormControlFile2"
-                            label="Picture product input"
+                            name="imageNotification"
+                            onChange={this.onChangeImageNotification}
+                            id="exampleFormControlFile1"
+                            label="Picture notification input"
                           />
                           <Modal.Footer>
                             <Button
@@ -283,11 +192,9 @@ class products extends Component {
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>CategoryID</th>
                         <th>Title</th>
                         <th>Description</th>
-                        <th>ProductPicture</th>
-                        <th>BannerPicture</th>
+                        <th>NotificationPicture</th>
                       </tr>
                     </thead>
                     <tbody>{data}</tbody>
@@ -303,21 +210,17 @@ class products extends Component {
 }
 const mapStateToProps = (state) => {
   return {
-    page: state.page,
-    category: state.category,
+    notification : state.notification
   };
 };
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    onPageAPI: (data) => {
-      dispatch(actions.pageAPI(data));
+    onNotification : (data) => {
+      dispatch(actions.notificationAPI(data));
     },
-    onShowPage: () => {
-      dispatch(actions.showPageAPI());
-    },
-    onShowCategory: () => {
-      dispatch(actions.category());
+    onNotificationShow: () => {
+      dispatch(actions.notificationShowAPI());
     },
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(products);
+export default connect(mapStateToProps, mapDispatchToProps)(Notification);

@@ -1,6 +1,7 @@
 import * as types from "./../constants/index";
 import axios from "./../helpers/axios/axios";
 import API from "./../utils/API";
+import APIz from './../utils/APIz';
 export const loginData = (data) => {
   return {
     type: types.authConstants.DATA_LOGIN,
@@ -25,7 +26,9 @@ export const login = () => {
     // });
     return API("api", "GET", null).then((res) => {
       console.log(res);
-      dispatch(dataLogin(res.data));
+      if(res && res.data) {
+        dispatch(dataLogin(res.data));
+      }
     });
   };
 };
@@ -50,7 +53,9 @@ export const signUp = (data) => {
     // middleware là lớp nằm giữa reducers và dispatch actions
     // giúp fetch dữ liệu xong mới dispatch actions
     return API("api", "POST", data).then((res) => {
-      dispatch(signUpAPI(res.data));
+      if(res && res.data) {
+        dispatch(signUpAPI(res.data));
+      }
     });
   };
 };
@@ -64,7 +69,9 @@ export const category = () => {
   return async (dispatch) => {
     return API("category", "GET", null).then((res) => {
       console.log(res);
-      dispatch(categoryAPI(res.data));
+      if(res && res.data) {
+        dispatch(categoryAPI(res.data));
+      }
     });
   };
 };
@@ -84,7 +91,9 @@ export const categoryADD = (data) => {
     // giúp fetch dữ liệu xong mới dispatch actions
     return API("category", "POST", data).then((res) => {
       console.log(res.data);
-      dispatch(addCategory(res.data));
+      if(res && res.data) {
+        dispatch(addCategory(res.data));
+      }
     });
   };
 };
@@ -104,7 +113,9 @@ export const productAPI = (data) => {
     // giúp fetch dữ liệu xong mới dispatch actions
     return API("product", "POST", data).then((res) => {
       console.log(res.data);
-      dispatch(productReducers(res.data));
+      if(res && res.data) {
+        dispatch(productReducers(res.data));
+      }
     });
   };
 };
@@ -118,7 +129,9 @@ export const showProduct = () => {
   return async (dispatch) => {
     return API("product", "GET", null).then((res) => {
       console.log(res);
-      dispatch(showProductReducers(res.data));
+      if(res && res.data) {
+        dispatch(showProductReducers(res.data));
+      }
     });
   };
 };
@@ -138,7 +151,9 @@ export const updateCategoryAPI = (category) => {
     // giúp fetch dữ liệu xong mới dispatch actions
     return API(`category/${category.id}`, "PUT", category).then((res) => {
       console.log(category);
-      dispatch(updateCategoryReducers(res.data));
+      if(res && res.data) {
+        dispatch(updateCategoryReducers(res.data));
+      }
     });
   };
 };
@@ -158,7 +173,9 @@ export const deleteCategoryAPI = (id) => {
     // middleware là lớp nằm giữa reducers và dispatch actions
     // giúp fetch dữ liệu xong mới dispatch actions
     return API(`category/${id}`, "DELETE", null).then((res) => {
-      dispatch(deleteCategoryReducers(res.data));
+      if(res && res.data) {
+        dispatch(deleteCategoryReducers(res.data));
+      }
     });
   };
 };
@@ -178,7 +195,9 @@ export const pageAPI = (data) => {
     // giúp fetch dữ liệu xong mới dispatch actions
     return API("page", "POST", data).then((res) => {
       console.log(res.data);
-      dispatch(pageReducers(res.data));
+      if(res && res.data) {
+        dispatch(pageReducers(res.data));
+      }
     });
   };
 };
@@ -192,13 +211,53 @@ export const showPageAPI = () => {
   return async (dispatch) => {
     return API("page", "GET", null).then((res) => {
       console.log(res);
-      dispatch(showPageReducer(res.data));
+      if(res && res.data) {
+        dispatch(showPageReducer(res.data));
+      }
     });
   };
 };
 export const showPageReducer = (data) => {
   return {
     type: types.authConstants.SHOW_PAGE,
+    data: data,
+  };
+};
+export const notificationAPI = (data) => {
+  return (dispatch) => {
+    // thời gian lấy dữ liệu từ server về lâu hơn thời gian lấy dữ liệu
+    // rồi truyền vào dispatch, nên sinh ra lỗi middleware
+    // hay nói cách khác là khi truyền dữ liệu từ server vào dispatch nhanh quá
+    // lúc này chưa có dữ liệu để truyền vào dispatch
+    // middleware là lớp nằm giữa reducers và dispatch actions
+    // giúp fetch dữ liệu xong mới dispatch actions
+    return APIz("notification", "POST", data).then((res) => {
+      console.log(res.data);
+      if(res && res.data) {
+        dispatch(notificationReducers(res.data));
+      }
+    });
+  };
+};
+export const notificationReducers = (data) => {
+  return {
+    type: types.authConstants.NOTIFICATION,
+    data: data,
+  };
+};
+export const notificationShowAPI = () => {
+  return async (dispatch) => {
+    return APIz("notification", "GET", null).then((res) => {
+      console.log(res);
+      if(res && res.data) {
+        dispatch(notificationShowReducers(res.data));
+      }
+    });
+  };
+};
+export const notificationShowReducers = (data) => {
+  return {
+    type: types.authConstants.NOTIFICATION_SHOW,
     data: data,
   };
 };

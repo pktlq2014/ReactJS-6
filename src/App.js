@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./containers/Home/index";
 import Signin from "./containers/Signin/index";
 import Products from './containers/Products/products';
-import Page from './containers/Page/page';
+import Notification from './containers/Notification/Notification';
 import Category from './containers/Category/category';
 import Orders from './containers/Orders/orders';
 import Signup from "./containers/Signup/index";
@@ -17,7 +17,7 @@ function App() {
         <Switch>
           {/* <Route path="/" exact component={Home} /> */}
           <PrivateRoute path="/" exact component={Home}/>
-          <PrivateRoute path="/page" component={Page}/>
+          <PrivateRoute path="/notification" component={Notification}/>
           <PrivateRoute path="/products" component={Products}/>
           <PrivateRoute path="/orders" component={Orders}/>
           <PrivateRoute path="/category" component={Category}/>
