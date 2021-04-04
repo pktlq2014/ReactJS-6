@@ -179,7 +179,7 @@ class orders extends Component {
                               <div className="timeline_status"></div>
                             )}
                           </div>
-                          <div>{`${Number(dateDelivery[1]) + 1}/${
+                          <div>{`${Number(dateDelivery[1])}/${
                             dateDelivery[0]
                           }/${dateDelivery[2]}`}</div>
                         </div>
@@ -191,7 +191,7 @@ class orders extends Component {
                               <div className="timeline_2_child">2</div>
                               <div className="timeline_status update_status"></div>
                             </div>
-                            <div>{`${Number(dateDelivery[1]) + 2}/${
+                            <div>{`${Number(dateDelivery[1]) + 1}/${
                               dateDelivery[0]
                             }/${dateDelivery[2]}`}</div>
                           </div>
@@ -202,7 +202,7 @@ class orders extends Component {
                               <div className="timeline_2_child_active">2</div>
                               <div className="timeline_status"></div>
                             </div>
-                            <div>{`${Number(dateDelivery[1]) + 2}/${
+                            <div>{`${Number(dateDelivery[1]) + 1}/${
                               dateDelivery[0]
                             }/${dateDelivery[2]}`}</div>
                           </div>
@@ -215,7 +215,7 @@ class orders extends Component {
                               <div className="timeline_2_child">3</div>
                               <div className="timeline_status update_status"></div>
                             </div>
-                            <div>{`${Number(dateDelivery[1]) + 3}/${
+                            <div>{`${Number(dateDelivery[1]) + 2}/${
                               dateDelivery[0]
                             }/${dateDelivery[2]}`}</div>
                           </div>
@@ -226,7 +226,7 @@ class orders extends Component {
                               <div className="timeline_2_child_active">3</div>
                               <div className="timeline_status"></div>
                             </div>
-                            <div>{`${Number(dateDelivery[1]) + 3}/${
+                            <div>{`${Number(dateDelivery[1]) + 2}/${
                               dateDelivery[0]
                             }/${dateDelivery[2]}`}</div>
                           </div>
@@ -238,7 +238,7 @@ class orders extends Component {
                             <div className="timeline_child_status">
                               <div className="timeline_2_child">4</div>
                             </div>
-                            <div>{`${Number(dateDelivery[1]) + 4}/${
+                            <div>{`${Number(dateDelivery[1]) + 3}/${
                               dateDelivery[0]
                             }/${dateDelivery[2]}`}</div>
                           </div>
@@ -248,7 +248,7 @@ class orders extends Component {
                             <div className="timeline_child_status">
                               <div className="timeline_2_child_active">4</div>
                             </div>
-                            <div>{`${Number(dateDelivery[1]) + 4}/${
+                            <div>{`${Number(dateDelivery[1]) + 3}/${
                               dateDelivery[0]
                             }/${dateDelivery[2]}`}</div>
                           </div>
