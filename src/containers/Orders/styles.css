@@ -11,3 +11,121 @@
 }
 .side_bar-marginLeft {
 }
+.order_title {
+  display: flex;
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin: 1rem 1.5rem 0 1.5rem;
+  justify-content: space-between;
+}
+.divide_title_content {
+  margin: 1rem 0;
+  border-bottom: 2px solid gray;
+}
+.order_parent {
+  display: flex;
+  margin: 1rem 0 0 0;
+  border: 2px solid gray;
+  flex-direction: column;
+}
+.order_content {
+  display: flex;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0.5rem 1.5rem 1rem 1.5rem;
+  text-align: justify;
+  flex-direction: column;
+}
+.limit {
+  max-width: 45rem;
+  overflow: auto;
+}
+.paper {
+  padding: 6px 16px;
+}
+.timeline {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.timeline_2_child {
+  font-weight: 900;
+  font-size: 1rem;
+  display: flex;
+  margin: 0.5rem 0;
+  justify-content: center;
+  align-items: center;
+  width: 1rem;
+  border-radius: 50%;
+  text-align: center;
+  padding: 0.5rem 1.25rem;
+  background-color: #0745f1;
+  color: white;
+}
+.timeline_2_child_active {
+  font-weight: 900;
+  font-size: 1rem;
+  display: flex;
+  margin: 0.5rem 0;
+  justify-content: center;
+  align-items: center;
+  width: 1rem;
+  border-radius: 50%;
+  text-align: center;
+  padding: 0.5rem 1.25rem;
+  background-color: grey;
+  color: white;
+}
+.timeline_child {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: center;
+  align-items: flex-start;
+}
+.timeline_child_active {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: center;
+  align-items: flex-start;
+  font-weight: 300;
+}
+.timeline_status {
+  width: 7.5rem;
+  background-color: grey;
+  color: grey;
+  height: 0.25rem;
+}
+.timeline_child_status {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.update_status {
+  background-color: #0745f1;
+  color: #0745f1;
+}
+.status_order {
+  display: flex;
+  justify-content: space-around;
+}
+.submit_delivery {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 1rem;
+  text-align: center;
+  color: white;
+  background-color: #0745f1;
+  border: none;
+  padding: 0.5rem 1rem;
+}
+.form-control {
+  text-align: center;
+}
+.update_status_delivery {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items:center;
+}

@@ -4,6 +4,7 @@ import dataLogin from './dataLogin';
 import category from './category';
 import showProduct from './showProduct';
 import page from './page';
+import order from './order';
 import notification from './notification';
 const rootReducers = combineReducers({
     login : login,
@@ -11,6 +12,7 @@ const rootReducers = combineReducers({
     category : category,
     showProduct : showProduct,
     page : page,
-    notification : notification
+    notification : notification,
+    order : order
 });
 export default rootReducers;
