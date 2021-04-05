@@ -129,3 +129,31 @@
   justify-content: center;
   align-items:center;
 }
+.nearest_orders_parent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.order_title {
+  display: flex;
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin: 1rem 1.5rem 0 1.5rem;
+  justify-content: flex-start;
+  align-items: center;
+}
+.orders_delete {
+  font-size: 2.5rem;
+  color: #0745f1;
+  cursor: pointer;
+  font-weight: 800;
+  margin: 1rem 1.5rem 0 1.5rem;
+}
+.orders_delete:hover {
+  color: red;
+}
+.notify_orders {
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin-top: 1rem;
+}

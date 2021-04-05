@@ -14,6 +14,7 @@ import TimelineContent from "@material-ui/lab/TimelineContent";
 import TimelineOppositeContent from "@material-ui/lab/TimelineOppositeContent";
 import TimelineDot from "@material-ui/lab/TimelineDot";
 import FastfoodIcon from "@material-ui/icons/Fastfood";
+import CloseIcon from "@material-ui/icons/Close";
 import LaptopMacIcon from "@material-ui/icons/LaptopMac";
 import HotelIcon from "@material-ui/icons/Hotel";
 import RepeatIcon from "@material-ui/icons/Repeat";
@@ -28,6 +29,12 @@ class orders extends Component {
       data: {},
     };
   }
+  componentDidMount() {
+    this.props.onOrderAPI();
+  }
+  onClickDeleteOrders = (values, index, status) => {
+    this.props.onOrdersDeleteAPI(values);
+  };
   onClickUpdate = (object) => {
     console.log(object);
     var data = {
@@ -62,9 +69,6 @@ class orders extends Component {
       count: this.state.count + 1,
     });
   };
-  componentDidMount() {
-    this.props.onOrderAPI();
-  }
   render() {
     var { order } = this.props;
     console.log(order);
@@ -73,218 +77,229 @@ class orders extends Component {
         <Row className="side_bar">
           <SideBar />
           <Col md={10} className="side_bar-marginLeft">
-            {order.map((object, index) => {
-              var date = object.date.split(",");
-              var dateDelivery = date[0].split("/");
-              var dateSetup = 0,
-                monthSetup = 0,
-                yearSetup = 0;
-              return (
-                <div key={index} className="order_parent">
-                  <div className="order_title">
-                    <div>Order</div>
-                    <div>{object.id}</div>
-                  </div>
-                  <div className="divide_title_content"></div>
-                  <div className="order_content">
-                    <div>
-                      <Table
-                        className="order_table"
-                        striped
-                        bordered
-                        hover
-                        size="sm"
-                      >
-                        <thead>
-                          <tr className="order_table_item">
-                            <th className="order_table_item_order_name">
-                              Account name
-                            </th>
-                            <th className="order_table_item_order_content">
-                              {object.username}
-                            </th>
-                          </tr>
-                          <tr className="order_table_item">
-                            <th className="order_table_item_order_name">
-                              Delivery address
-                            </th>
-                            <th className="order_table_item_order_content limit">
-                              {object.address ? (
-                                object.address
-                              ) : (
-                                <div className="order_table_item_available">
-                                  delivery address not available, please check
-                                  again
-                                </div>
-                              )}
-                            </th>
-                          </tr>
-                          <tr className="order_table_item">
-                            <th className="order_table_item_order_name">
-                              Order
-                            </th>
-                            <th className="order_table_item_order_content">
-                              {object.order.map((values, index) => {
-                                return (
-                                  <div key={index}>{`${values.name} : ${
-                                    values.price
-                                  }$ (price) x ${
-                                    values.quantity
-                                  } (quantity) = ${
-                                    values.price * values.quantity
-                                  }$`}</div>
-                                );
-                              })}
-                            </th>
-                          </tr>
-                          <tr className="order_table_item">
-                            <th className="order_table_item_order_name">
-                              Total amount
-                            </th>
-                            <th className="order_table_item_order_content">
-                              {object.total + 6}$ (+6$ shipping)
-                            </th>
-                          </tr>
-                          <tr className="order_table_item">
-                            <th className="order_table_item_order_name">
-                              Payment method
-                            </th>
-                            <th className="order_table_item_order_content">
-                              {object.payment ? (
-                                object.payment
-                              ) : (
-                                <div className="order_table_item_available">
-                                  payment method not available, please check
-                                  again
-                                </div>
-                              )}
-                            </th>
-                          </tr>
-                          <tr>
-                            <th>Date of order</th>
-                            <th>{`${dateDelivery[1]}/${dateDelivery[0]}/${dateDelivery[2]}`}</th>
-                          </tr>
-                        </thead>
-                      </Table>
+            {
+              order.length === 0
+              ? <div className="notify_orders">The System Has No Orders Yet!!!</div>
+              :             order.map((object, index) => {
+                var date = object.date.split(",");
+                var dateDelivery = date[0].split("/");
+                var dateSetup = 0,
+                  monthSetup = 0,
+                  yearSetup = 0;
+                return (
+                  <div key={index} className="order_parent">
+                    <div className="nearest_orders_parent">
+                      <div className="order_title">{`Order number : ${object.id}`}</div>
+                      <CloseIcon
+                        onClick={() =>
+                          this.onClickDeleteOrders(object, index, object.status)
+                        }
+                        fontSize="large"
+                        className="orders_delete"
+                      />
                     </div>
-                    <div key={index} className="status_order">
-                      <div className="timeline">
-                        <div className="timeline_child">
-                          <div>ordered</div>
-                          <div className="timeline_child_status">
-                            <div className="timeline_2_child">1</div>
-                            {object.status > 0 ? (
-                              <div className="timeline_status update_status"></div>
-                            ) : (
-                              <div className="timeline_status"></div>
-                            )}
+  
+                    <div className="divide_title_content"></div>
+                    <div className="order_content">
+                      <div>
+                        <Table
+                          className="order_table"
+                          striped
+                          bordered
+                          hover
+                          size="sm"
+                        >
+                          <thead>
+                            <tr className="order_table_item">
+                              <th className="order_table_item_order_name">
+                                Account name
+                              </th>
+                              <th className="order_table_item_order_content">
+                                {object.username}
+                              </th>
+                            </tr>
+                            <tr className="order_table_item">
+                              <th className="order_table_item_order_name">
+                                Delivery address
+                              </th>
+                              <th className="order_table_item_order_content limit">
+                                {object.address ? (
+                                  object.address
+                                ) : (
+                                  <div className="order_table_item_available">
+                                    delivery address not available, please check
+                                    again
+                                  </div>
+                                )}
+                              </th>
+                            </tr>
+                            <tr className="order_table_item">
+                              <th className="order_table_item_order_name">
+                                Order
+                              </th>
+                              <th className="order_table_item_order_content">
+                                {object.order.map((values, index) => {
+                                  return (
+                                    <div key={index}>{`${values.name} : ${
+                                      values.price
+                                    }$ (price) x ${
+                                      values.quantity
+                                    } (quantity) = ${
+                                      values.price * values.quantity
+                                    }$`}</div>
+                                  );
+                                })}
+                              </th>
+                            </tr>
+                            <tr className="order_table_item">
+                              <th className="order_table_item_order_name">
+                                Total amount
+                              </th>
+                              <th className="order_table_item_order_content">
+                                {object.total + 6}$ (+6$ shipping)
+                              </th>
+                            </tr>
+                            <tr className="order_table_item">
+                              <th className="order_table_item_order_name">
+                                Payment method
+                              </th>
+                              <th className="order_table_item_order_content">
+                                {object.payment ? (
+                                  object.payment
+                                ) : (
+                                  <div className="order_table_item_available">
+                                    payment method not available, please check
+                                    again
+                                  </div>
+                                )}
+                              </th>
+                            </tr>
+                            <tr>
+                              <th>Date of order</th>
+                              <th>{`${dateDelivery[1]}/${dateDelivery[0]}/${dateDelivery[2]}`}</th>
+                            </tr>
+                          </thead>
+                        </Table>
+                      </div>
+                      <div key={index} className="status_order">
+                        <div className="timeline">
+                          <div className="timeline_child">
+                            <div>ordered</div>
+                            <div className="timeline_child_status">
+                              <div className="timeline_2_child">1</div>
+                              {object.status > 0 ? (
+                                <div className="timeline_status update_status"></div>
+                              ) : (
+                                <div className="timeline_status"></div>
+                              )}
+                            </div>
+                            <div>{`${Number(dateDelivery[1])}/${
+                              dateDelivery[0]
+                            }/${dateDelivery[2]}`}</div>
                           </div>
-                          <div>{`${Number(dateDelivery[1])}/${
-                            dateDelivery[0]
-                          }/${dateDelivery[2]}`}</div>
+  
+                          {object.status > 1 ? (
+                            <div className="timeline_child">
+                              <div>packed</div>
+                              <div className="timeline_child_status">
+                                <div className="timeline_2_child">2</div>
+                                <div className="timeline_status update_status"></div>
+                              </div>
+                              <div>{`${Number(dateDelivery[1]) + 1}/${
+                                dateDelivery[0]
+                              }/${dateDelivery[2]}`}</div>
+                            </div>
+                          ) : (
+                            <div className="timeline_child_active">
+                              <div>packed</div>
+                              <div className="timeline_child_status">
+                                <div className="timeline_2_child_active">2</div>
+                                <div className="timeline_status"></div>
+                              </div>
+                              <div>{`${Number(dateDelivery[1]) + 1}/${
+                                dateDelivery[0]
+                              }/${dateDelivery[2]}`}</div>
+                            </div>
+                          )}
+  
+                          {object.status >= 3 && object.status <= 4 ? (
+                            <div className="timeline_child">
+                              <div>shipped</div>
+                              <div className="timeline_child_status">
+                                <div className="timeline_2_child">3</div>
+                                <div className="timeline_status update_status"></div>
+                              </div>
+                              <div>{`${Number(dateDelivery[1]) + 2}/${
+                                dateDelivery[0]
+                              }/${dateDelivery[2]}`}</div>
+                            </div>
+                          ) : (
+                            <div className="timeline_child_active">
+                              <div>shipped</div>
+                              <div className="timeline_child_status">
+                                <div className="timeline_2_child_active">3</div>
+                                <div className="timeline_status"></div>
+                              </div>
+                              <div>{`${Number(dateDelivery[1]) + 2}/${
+                                dateDelivery[0]
+                              }/${dateDelivery[2]}`}</div>
+                            </div>
+                          )}
+  
+                          {object.status > 3 && object.status <= 4 ? (
+                            <div className="timeline_child">
+                              <div>delivered</div>
+                              <div className="timeline_child_status">
+                                <div className="timeline_2_child">4</div>
+                              </div>
+                              <div>{`${Number(dateDelivery[1]) + 3}/${
+                                dateDelivery[0]
+                              }/${dateDelivery[2]}`}</div>
+                            </div>
+                          ) : (
+                            <div className="timeline_child_active">
+                              <div>delivered</div>
+                              <div className="timeline_child_status">
+                                <div className="timeline_2_child_active">4</div>
+                              </div>
+                              <div>{`${Number(dateDelivery[1]) + 3}/${
+                                dateDelivery[0]
+                              }/${dateDelivery[2]}`}</div>
+                            </div>
+                          )}
                         </div>
-
-                        {object.status > 1 ? (
-                          <div className="timeline_child">
-                            <div>packed</div>
-                            <div className="timeline_child_status">
-                              <div className="timeline_2_child">2</div>
-                              <div className="timeline_status update_status"></div>
-                            </div>
-                            <div>{`${Number(dateDelivery[1]) + 1}/${
-                              dateDelivery[0]
-                            }/${dateDelivery[2]}`}</div>
-                          </div>
-                        ) : (
-                          <div className="timeline_child_active">
-                            <div>packed</div>
-                            <div className="timeline_child_status">
-                              <div className="timeline_2_child_active">2</div>
-                              <div className="timeline_status"></div>
-                            </div>
-                            <div>{`${Number(dateDelivery[1]) + 1}/${
-                              dateDelivery[0]
-                            }/${dateDelivery[2]}`}</div>
-                          </div>
-                        )}
-
-                        {object.status >= 3 && object.status <= 4 ? (
-                          <div className="timeline_child">
-                            <div>shipped</div>
-                            <div className="timeline_child_status">
-                              <div className="timeline_2_child">3</div>
-                              <div className="timeline_status update_status"></div>
-                            </div>
-                            <div>{`${Number(dateDelivery[1]) + 2}/${
-                              dateDelivery[0]
-                            }/${dateDelivery[2]}`}</div>
-                          </div>
-                        ) : (
-                          <div className="timeline_child_active">
-                            <div>shipped</div>
-                            <div className="timeline_child_status">
-                              <div className="timeline_2_child_active">3</div>
-                              <div className="timeline_status"></div>
-                            </div>
-                            <div>{`${Number(dateDelivery[1]) + 2}/${
-                              dateDelivery[0]
-                            }/${dateDelivery[2]}`}</div>
-                          </div>
-                        )}
-
-                        {object.status > 3 && object.status <= 4 ? (
-                          <div className="timeline_child">
-                            <div>delivered</div>
-                            <div className="timeline_child_status">
-                              <div className="timeline_2_child">4</div>
-                            </div>
-                            <div>{`${Number(dateDelivery[1]) + 3}/${
-                              dateDelivery[0]
-                            }/${dateDelivery[2]}`}</div>
-                          </div>
-                        ) : (
-                          <div className="timeline_child_active">
-                            <div>delivered</div>
-                            <div className="timeline_child_status">
-                              <div className="timeline_2_child_active">4</div>
-                            </div>
-                            <div>{`${Number(dateDelivery[1]) + 3}/${
-                              dateDelivery[0]
-                            }/${dateDelivery[2]}`}</div>
-                          </div>
-                        )}
-                      </div>
-
-                      <div className="update_status_delivery">
-                        <form onSubmit={this.onSubmit}>
-                          <select
-                            name="status"
-                            onChange={this.onChange}
-                            id="input"
-                            value={this.state.status}
-                            className="form-control"
-                            required="required"
-                          >
-                            <option value={0}>select status</option>
-                            <option value={1}>packed</option>
-                            <option value={2}>shipped</option>
-                            <option value={3}>delivery</option>
-                            <option value={4}>success</option>
-                          </select>
-                          <button
-                            onClick={() => this.onClickUpdate(object)}
-                            className="submit_delivery"
-                            type="submit"
-                          >
-                            save the delivery status
-                          </button>
-                        </form>
+  
+                        <div className="update_status_delivery">
+                          <form onSubmit={this.onSubmit}>
+                            <select
+                              name="status"
+                              onChange={this.onChange}
+                              id="input"
+                              value={this.state.status}
+                              className="form-control"
+                              required="required"
+                            >
+                              <option value={0}>select status</option>
+                              <option value={1}>packed</option>
+                              <option value={2}>shipped</option>
+                              <option value={3}>delivery</option>
+                              <option value={4}>success</option>
+                            </select>
+                            <button
+                              onClick={() => this.onClickUpdate(object)}
+                              className="submit_delivery"
+                              type="submit"
+                            >
+                              save the delivery status
+                            </button>
+                          </form>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            
           </Col>
         </Row>
       </Container>
@@ -303,6 +318,9 @@ const mapDispatchToProps = (dispatch, props) => {
     },
     onOrderUpdate: (data) => {
       dispatch(actions.updateOrderAPI(data));
+    },
+    onOrdersDeleteAPI: (data) => {
+      dispatch(actions.deleteOrdersAPI(data));
     },
   };
 };
