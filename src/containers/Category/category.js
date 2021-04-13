@@ -497,7 +497,7 @@ class category extends Component {
           <Col md={10} className="textAlign-justify side_bar-marginLeft">
             <Container>
               <Row>
-                <Col md={10}>
+                <Col md={12}>
                   <div className="category">
                     <h3>Add Category</h3>
                     <div class="actions_btn">

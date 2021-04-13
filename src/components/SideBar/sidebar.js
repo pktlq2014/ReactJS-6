@@ -5,8 +5,8 @@ import "./styles.css";
 class sidebar extends Component {
   render() {
     return (
-      <Col md={2} className="side_bar_menu">
-        <li>
+      <div className="side_bar_menu">
+         <li>
           <NavLink exact to="/">Home</NavLink>
         </li>
         <li>
@@ -21,7 +21,10 @@ class sidebar extends Component {
         <li>
           <NavLink to="/category">Category</NavLink>
         </li>
-      </Col>
+      </div>
+      // <Col md={2} className="side_bar_menu">
+       
+      // </Col>
     );
   }
 }

@@ -9,6 +9,13 @@
 }
 .side_bar {
 }
+.admin {
+  display: grid;
+  grid-template-columns: 20% 80%;
+  text-align: justify;
+  grid-column-gap: 1rem;
+  margin: 1rem;
+}
 .side_bar-marginLeft {
 }
 .textAlign-justify {

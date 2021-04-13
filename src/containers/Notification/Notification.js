@@ -115,7 +115,7 @@ class Notification extends Component {
           <Col md={10} className="textAlign-justify side_bar-marginLeft">
             <Container>
               <Row>
-                <Col md={10}>
+                <Col md={12}>
                   <div className="category">
                     <h3>Notification</h3>
                     <Button onClick={this.setModalShow} variant="success">
