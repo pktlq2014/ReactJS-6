@@ -1,6 +1,8 @@
 .side_bar_menu {
-
+  position: fixed;
+  top: 0;
   z-index: 99999999999999999999;
+  left: 0;
   text-align: justify;
   height: 92vh;
   box-shadow: inset 0 0 0.2rem gray;

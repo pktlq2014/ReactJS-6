@@ -159,7 +159,7 @@ class products extends Component {
           <Col md={10} className="textAlign-justify side_bar-marginLeft">
             <Container>
               <Row>
-                <Col md={12}>
+                <Col md={10}>
                   <div className="category">
                     <h3>Products</h3>
                     <Button onClick={this.setModalShow} variant="success">
