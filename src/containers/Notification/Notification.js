@@ -109,113 +109,119 @@ class Notification extends Component {
       );
     });
     return (
-      <Container fluid>
-        <Row className="side_bar">
-          <SideBar />
-          <Col md={10} className="textAlign-justify side_bar-marginLeft">
-            <Container>
-              <Row>
-                <Col md={12}>
-                  <div className="category">
-                    <h3>Notification</h3>
-                    <Button onClick={this.setModalShow} variant="success">
-                      Add Notification
-                    </Button>
+      <div className="admin">
+        <div className="side_bar_menu_new admin_left">
+          <li>
+            <NavLink exact to="/">
+              Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink exact to="/notification">
+              Notification
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/products">Products</NavLink>
+          </li>
+          <li>
+            <NavLink to="/orders">Orders</NavLink>
+          </li>
+          <li>
+            <NavLink to="/category">Category</NavLink>
+          </li>
+        </div>
+        <div className="admin_right ">
+          <div className="category_new">
+            <h3>Notification</h3>
+            <Button onClick={this.setModalShow} variant="success">
+              Add Notification
+            </Button>
 
-                    <Modal
-                      show={this.state.modalShow}
-                      onHide={this.onHideShow}
-                      size="lg"
-                      aria-labelledby="contained-modal-title-vcenter"
-                      centered
+            <Modal
+              show={this.state.modalShow}
+              onHide={this.onHideShow}
+              size="lg"
+              aria-labelledby="contained-modal-title-vcenter"
+              centered
+            >
+              <Modal.Header closeButton>
+                <Modal.Title id="contained-modal-title-vcenter">
+                  Add New Notification
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <Form onSubmit={this.onSubmit}>
+                  <Form.Group controlId="exampleForm.ControlInput1">
+                    <Form.Label>Title</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="title"
+                      value={this.state.title}
+                      onChange={this.onChange}
+                      placeholder="title..."
+                    />
+                  </Form.Group>
+                  <Form.Group controlId="exampleForm.ControlInput1">
+                    <Form.Label>Description</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="description"
+                      value={this.state.description}
+                      onChange={this.onChange}
+                      placeholder="description..."
+                    />
+                  </Form.Group>
+                  {this.state.imageNotificationArray.length > 0
+                    ? this.state.imageNotificationArray.map((values, index) => {
+                        return <div key={index}>{values.name}</div>;
+                      })
+                    : null}
+                  <Form.File
+                    type="file"
+                    name="imageNotification"
+                    onChange={this.onChangeImageNotification}
+                    id="exampleFormControlFile1"
+                    label="Picture notification input"
+                  />
+                  <Modal.Footer>
+                    <Button
+                      onClick={this.onHideShow}
+                      type="submit"
+                      variant="primary"
                     >
-                      <Modal.Header closeButton>
-                        <Modal.Title id="contained-modal-title-vcenter">
-                          Add New Notification
-                        </Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-                        <Form onSubmit={this.onSubmit}>
-                          <Form.Group controlId="exampleForm.ControlInput1">
-                            <Form.Label>Title</Form.Label>
-                            <Form.Control
-                              type="text"
-                              name="title"
-                              value={this.state.title}
-                              onChange={this.onChange}
-                              placeholder="title..."
-                            />
-                          </Form.Group>
-                          <Form.Group controlId="exampleForm.ControlInput1">
-                            <Form.Label>Description</Form.Label>
-                            <Form.Control
-                              type="text"
-                              name="description"
-                              value={this.state.description}
-                              onChange={this.onChange}
-                              placeholder="description..."
-                            />
-                          </Form.Group>
-                          {this.state.imageNotificationArray.length > 0
-                            ? this.state.imageNotificationArray.map(
-                                (values, index) => {
-                                  return <div key={index}>{values.name}</div>;
-                                }
-                              )
-                            : null}
-                          <Form.File
-                            type="file"
-                            name="imageNotification"
-                            onChange={this.onChangeImageNotification}
-                            id="exampleFormControlFile1"
-                            label="Picture notification input"
-                          />
-                          <Modal.Footer>
-                            <Button
-                              onClick={this.onHideShow}
-                              type="submit"
-                              variant="primary"
-                            >
-                              Save Changes
-                            </Button>
-                            <Button onClick={this.onHideShow}>Close</Button>
-                          </Modal.Footer>
-                        </Form>
-                      </Modal.Body>
-                    </Modal>
-                  </div>
-                </Col>
-              </Row>
-              <Row>
-                <Col md={12}>
-                  <Table striped bordered hover variant="dark">
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Title</th>
-                        <th>Description</th>
-                        <th>NotificationPicture</th>
-                      </tr>
-                    </thead>
-                    <tbody>{data}</tbody>
-                  </Table>
-                </Col>
-              </Row>
-            </Container>
-          </Col>
-        </Row>
-      </Container>
+                      Save Changes
+                    </Button>
+                    <Button onClick={this.onHideShow}>Close</Button>
+                  </Modal.Footer>
+                </Form>
+              </Modal.Body>
+            </Modal>
+          </div>
+          <Table striped bordered hover variant="dark">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>NotificationPicture</th>
+              </tr>
+            </thead>
+            <tbody>{data}</tbody>
+          </Table>
+        </div>
+      </div>
     );
   }
 }
 const mapStateToProps = (state) => {
   return {
-    notification : state.notification
+    notification: state.notification,
   };
 };
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    onNotification : (data) => {
+    onNotification: (data) => {
       dispatch(actions.notificationAPI(data));
     },
     onNotificationShow: () => {

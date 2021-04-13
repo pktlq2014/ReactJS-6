@@ -26,8 +26,8 @@ class products extends Component {
       description: "",
       productPictures: [],
       image: "",
-      star : "",
-      sales : ""
+      star: "",
+      sales: "",
     };
   }
   componentDidMount() {
@@ -132,20 +132,18 @@ class products extends Component {
           <td>{values.categoryID}</td>
           <td>{values.parentID}</td>
           <td className="width-15">
-            {
-              values.productPictures.map((valuess, index) => {
-                var image = require(`./../../assets/images/${valuess.img}`)
-                return (
-                  <img
+            {values.productPictures.map((valuess, index) => {
+              var image = require(`./../../assets/images/${valuess.img}`);
+              return (
+                <img
                   key={index}
                   className="img"
                   //src={`${process.env.PUBLIC_URL}/${truoc}`}
                   src={image.default}
                   alt="logo"
                 />
-                )
-              })
-            }
+              );
+            })}
           </td>
           <td className="width-5">{values.sales}</td>
           <td className="width-5">{values.star}</td>
@@ -153,188 +151,190 @@ class products extends Component {
       );
     });
     return (
-      <Container fluid>
-        <Row className="side_bar">
-          <SideBar />
-          <Col md={10} className="textAlign-justify side_bar-marginLeft">
-            <Container>
-              <Row>
-                <Col md={12}>
-                  <div className="category">
-                    <h3>Products</h3>
-                    <Button onClick={this.setModalShow} variant="success">
-                      Add Product
-                    </Button>
+      <div className="admin">
+        <div className="side_bar_menu_new admin_left">
+          <li>
+            <NavLink exact to="/">
+              Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink exact to="/notification">
+              Notification
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/products">Products</NavLink>
+          </li>
+          <li>
+            <NavLink to="/orders">Orders</NavLink>
+          </li>
+          <li>
+            <NavLink to="/category">Category</NavLink>
+          </li>
+        </div>
+        <div className="admin_right ">
+          <div className="category_new">
+            <h3>Products</h3>
+            <Button onClick={this.setModalShow} variant="success">
+              Add Product
+            </Button>
 
-                    <Modal
-                      show={this.state.modalShow}
-                      onHide={this.onHideShow}
-                      size="lg"
-                      aria-labelledby="contained-modal-title-vcenter"
-                      centered
+            <Modal
+              show={this.state.modalShow}
+              onHide={this.onHideShow}
+              size="lg"
+              aria-labelledby="contained-modal-title-vcenter"
+              centered
+            >
+              <Modal.Header closeButton>
+                <Modal.Title id="contained-modal-title-vcenter">
+                  Add New Products
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <Form onSubmit={this.onSubmit}>
+                  <Form.Group controlId="exampleForm.ControlInput1">
+                    <Form.Label>Name</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="name"
+                      value={this.state.name}
+                      onChange={this.onChange}
+                      placeholder="products name..."
+                    />
+                  </Form.Group>
+                  <Form.Group controlId="exampleForm.ControlInput1">
+                    <Form.Label>Quantity</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="quantity"
+                      value={this.state.quantity}
+                      onChange={this.onChange}
+                      placeholder="quantity..."
+                    />
+                  </Form.Group>
+                  <Form.Group controlId="exampleForm.ControlInput1">
+                    <Form.Label>Price</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="price"
+                      value={this.state.price}
+                      onChange={this.onChange}
+                      placeholder="price..."
+                    />
+                  </Form.Group>
+                  <Form.Group controlId="exampleForm.ControlInput1">
+                    <Form.Label>Description</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="description"
+                      value={this.state.description}
+                      onChange={this.onChange}
+                      placeholder="description..."
+                    />
+                  </Form.Group>
+                  <Form.Group controlId="exampleForm.ControlInput1">
+                    <Form.Label>Sales</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="sales"
+                      value={this.state.sales}
+                      onChange={this.onChange}
+                      placeholder="sales..."
+                    />
+                  </Form.Group>
+                  <Form.Group controlId="exampleForm.ControlInput1">
+                    <Form.Label>Star</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="star"
+                      value={this.state.star}
+                      onChange={this.onChange}
+                      placeholder="star..."
+                    />
+                  </Form.Group>
+                  <Form.Group controlId="exampleForm.ControlSelect1">
+                    <Form.Label>Category select</Form.Label>
+                    <Form.Control
+                      name="categoryID"
+                      onChange={this.onChange}
+                      value={this.state.categoryID}
+                      as="select"
                     >
-                      <Modal.Header closeButton>
-                        <Modal.Title id="contained-modal-title-vcenter">
-                          Add New Products
-                        </Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-                        <Form onSubmit={this.onSubmit}>
-                          <Form.Group controlId="exampleForm.ControlInput1">
-                            <Form.Label>Name</Form.Label>
-                            <Form.Control
-                              type="text"
-                              name="name"
-                              value={this.state.name}
-                              onChange={this.onChange}
-                              placeholder="products name..."
-                            />
-                          </Form.Group>
-                          <Form.Group controlId="exampleForm.ControlInput1">
-                            <Form.Label>Quantity</Form.Label>
-                            <Form.Control
-                              type="text"
-                              name="quantity"
-                              value={this.state.quantity}
-                              onChange={this.onChange}
-                              placeholder="quantity..."
-                            />
-                          </Form.Group>
-                          <Form.Group controlId="exampleForm.ControlInput1">
-                            <Form.Label>Price</Form.Label>
-                            <Form.Control
-                              type="text"
-                              name="price"
-                              value={this.state.price}
-                              onChange={this.onChange}
-                              placeholder="price..."
-                            />
-                          </Form.Group>
-                          <Form.Group controlId="exampleForm.ControlInput1">
-                            <Form.Label>Description</Form.Label>
-                            <Form.Control
-                              type="text"
-                              name="description"
-                              value={this.state.description}
-                              onChange={this.onChange}
-                              placeholder="description..."
-                            />
-                          </Form.Group>
-                          <Form.Group controlId="exampleForm.ControlInput1">
-                            <Form.Label>Sales</Form.Label>
-                            <Form.Control
-                              type="text"
-                              name="sales"
-                              value={this.state.sales}
-                              onChange={this.onChange}
-                              placeholder="sales..."
-                            />
-                          </Form.Group>
-                          <Form.Group controlId="exampleForm.ControlInput1">
-                            <Form.Label>Star</Form.Label>
-                            <Form.Control
-                              type="text"
-                              name="star"
-                              value={this.state.star}
-                              onChange={this.onChange}
-                              placeholder="star..."
-                            />
-                          </Form.Group>
-                          <Form.Group controlId="exampleForm.ControlSelect1">
-                            <Form.Label>Category select</Form.Label>
-                            <Form.Control
-                              name="categoryID"
-                              onChange={this.onChange}
-                              value={this.state.categoryID}
-                              as="select"
-                            >
-                              <option>category select</option>
-                              {this.getOptionMenu(category).map(
-                                (values, index) => {
-                                  return (
-                                    <option key={index} value={values.id}>
-                                      {values.name}
-                                    </option>
-                                  );
-                                }
-                              )}
-                            </Form.Control>
-                          </Form.Group>
-                          <Form.Group controlId="exampleForm.ControlSelect1">
-                            <Form.Label>Parent select</Form.Label>
-                            <Form.Control
-                              name="parentID"
-                              onChange={this.onChange}
-                              value={this.state.parentID}
-                              as="select"
-                            >
-                              <option>parent select</option>
-                              {this.getOptionMenu(category).map(
-                                (values, index) => {
-                                  return (
-                                    <option key={index} value={values.id}>
-                                      {values.name}
-                                    </option>
-                                  );
-                                }
-                              )}
-                            </Form.Control>
-                          </Form.Group>
-                          {this.state.productPictures.length > 0
-                            ? this.state.productPictures.map(
-                                (values, index) => {
-                                  return <div key={index}>{values.name}</div>;
-                                }
-                              )
-                            : null}
-                          <Form.File
-                            type="file"
-                            name="image"
-                            onChange={this.onChangeImage}
-                            id="exampleFormControlFile1"
-                            label="Picture product input"
-                          />
-                          <Modal.Footer>
-                            <Button
-                              onClick={this.onHideShow}
-                              type="submit"
-                              variant="primary"
-                            >
-                              Save Changes
-                            </Button>
-                            <Button onClick={this.onHideShow}>Close</Button>
-                          </Modal.Footer>
-                        </Form>
-                      </Modal.Body>
-                    </Modal>
-                  </div>
-                </Col>
-              </Row>
-              <Row>
-                <Col md={12}>
-                  <Table striped bordered hover variant="dark">
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Description</th>
-                        <th>CategoryID</th>
-                        <th>ParentID</th>
-                        <th>ProductPicture</th>
-                        <th>Sales</th>
-                        <th>Star</th>
-                      </tr>
-                    </thead>
-                    <tbody>{data}</tbody>
-                  </Table>
-                </Col>
-              </Row>
-            </Container>
-          </Col>
-        </Row>
-      </Container>
+                      <option>category select</option>
+                      {this.getOptionMenu(category).map((values, index) => {
+                        return (
+                          <option key={index} value={values.id}>
+                            {values.name}
+                          </option>
+                        );
+                      })}
+                    </Form.Control>
+                  </Form.Group>
+                  <Form.Group controlId="exampleForm.ControlSelect1">
+                    <Form.Label>Parent select</Form.Label>
+                    <Form.Control
+                      name="parentID"
+                      onChange={this.onChange}
+                      value={this.state.parentID}
+                      as="select"
+                    >
+                      <option>parent select</option>
+                      {this.getOptionMenu(category).map((values, index) => {
+                        return (
+                          <option key={index} value={values.id}>
+                            {values.name}
+                          </option>
+                        );
+                      })}
+                    </Form.Control>
+                  </Form.Group>
+                  {this.state.productPictures.length > 0
+                    ? this.state.productPictures.map((values, index) => {
+                        return <div key={index}>{values.name}</div>;
+                      })
+                    : null}
+                  <Form.File
+                    type="file"
+                    name="image"
+                    onChange={this.onChangeImage}
+                    id="exampleFormControlFile1"
+                    label="Picture product input"
+                  />
+                  <Modal.Footer>
+                    <Button
+                      onClick={this.onHideShow}
+                      type="submit"
+                      variant="primary"
+                    >
+                      Save Changes
+                    </Button>
+                    <Button onClick={this.onHideShow}>Close</Button>
+                  </Modal.Footer>
+                </Form>
+              </Modal.Body>
+            </Modal>
+          </div>
+          <Table striped bordered hover variant="dark">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Description</th>
+                <th>CategoryID</th>
+                <th>ParentID</th>
+                <th>ProductPicture</th>
+                <th>Sales</th>
+                <th>Star</th>
+              </tr>
+            </thead>
+            <tbody>{data}</tbody>
+          </Table>
+        </div>
+      </div>
     );
   }
 }

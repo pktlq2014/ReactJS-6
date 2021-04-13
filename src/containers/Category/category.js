@@ -103,7 +103,7 @@ class category extends Component {
       idParentUpdate: "",
       showDelete: false,
       arrayDelete: [],
-      type : ""
+      type: "",
     };
   }
   showDeleteName = () => {
@@ -285,14 +285,14 @@ class category extends Component {
       idParent: this.state.idParent,
       name: this.state.name,
       image: this.state.image,
-      type: this.state.type
+      type: this.state.type,
     };
     this.props.onAddCategory(data);
     this.setState({
       idParent: "",
       name: "",
       image: "",
-      type: ""
+      type: "",
     });
   };
   onSubmitUpdate = (e) => {
@@ -490,331 +490,318 @@ class category extends Component {
     // sắp xếp json theo dạng cha-con
     var category = this.createCategories(category1);
     return (
-      <Container fluid>
-        <Row className="side_bar">
-          <SideBar />
+      <div className="admin">
+        <div className="side_bar_menu_new admin_left">
+          <li>
+            <NavLink exact to="/">
+              Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink exact to="/notification">
+              Notification
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/products">Products</NavLink>
+          </li>
+          <li>
+            <NavLink to="/orders">Orders</NavLink>
+          </li>
+          <li>
+            <NavLink to="/category">Category</NavLink>
+          </li>
+        </div>
+        <div className="admin_right balance">
+          <div className="category_new">
+            <h3>Add Category</h3>
+            <div class="actions_btn">
+              <span className="actions_btn-child">Actions: </span>
+              <Button
+                className="actions_btn-child"
+                onClick={this.setModalShow}
+                variant="success"
+              >
+                <AddCircleOutlineIcon className="category_icon" />
+                <span className="title_btn">Add Category</span>
+              </Button>
+              <Button
+                className="actions_btn-child"
+                onClick={this.setModalShowCategory}
+                variant="primary"
+              >
+                <EditIcon className="category_icon" />
+                <span className="title_btn">Update Category</span>
+              </Button>
+              <Button
+                className="actions_btn-child"
+                onClick={this.setModalShowCategoryDelete}
+                variant="danger"
+              >
+                <DeleteForeverIcon className="category_icon" />
+                <span className="title_btn">Delete Category</span>
+              </Button>
+            </div>
+          </div>
+          {this.renderAddCategoryModal(category1)}
+          {/* delete */}
+          <Modal show={this.state.showDelete} onHide={this.hiddenDelete}>
+            <Modal.Header closeButton>
+              <Modal.Title>Are you sure delete category?</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              {
+                // this.showDeleteName()
+                this.state.checked.length > 0 ? (
+                  this.showDeleteName()
+                ) : (
+                  <h6>No data available </h6>
+                )
+              }
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="primary" onClick={this.hiddenDeleteAccess}>
+                Save Changes
+              </Button>
+              <Button variant="secondary" onClick={this.hiddenDelete}>
+                Close
+              </Button>
+            </Modal.Footer>
+          </Modal>
+          {/* Edit */}
+          <Modal
+            show={this.state.updateCategory}
+            onHide={this.updateCategory}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+          >
+            <Modal.Header closeButton>
+              <Modal.Title id="contained-modal-title-vcenter">
+                Update Category
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form onSubmit={this.onSubmitUpdate}>
+                <div className="expanded_category">
+                  <p className="expanded">Expanded Category</p>
+                  {console.log(expandedArrayShow)}
+                  {expandedArrayShow.length > 0 ? (
+                    expandedArrayShow.map((values, index) => {
+                      return (
+                        <Row key={index}>
+                          <Col>
+                            <Form.Group controlId="exampleForm.ControlInput1">
+                              <Form.Label>Name category</Form.Label>
+                              <Form.Control
+                                type="text"
+                                //name="nameUpdate"
+                                // value={this.state.name}
+                                value={values.name}
+                                onChange={(e) =>
+                                  this.handleCategoryInput(
+                                    "name",
+                                    e.target.value,
+                                    index,
+                                    "expanded"
+                                  )
+                                }
+                                placeholder="input category..."
+                              />
+                            </Form.Group>
+                          </Col>
 
-          <Col md={10} className="textAlign-justify side_bar-marginLeft">
-            <Container>
-              <Row>
-                <Col md={12}>
-                  <div className="category">
-                    <h3>Add Category</h3>
-                    <div class="actions_btn">
-                      <span className="actions_btn-child">Actions: </span>
-                      <Button
-                        className="actions_btn-child"
-                        onClick={this.setModalShow}
-                        variant="success"
-                      >
-                        <AddCircleOutlineIcon className="category_icon" />
-                        <span className="title_btn">Add Category</span>
-                      </Button>
-                      <Button
-                        className="actions_btn-child"
-                        onClick={this.setModalShowCategory}
-                        variant="primary"
-                      >
-                        <EditIcon className="category_icon" />
-                        <span className="title_btn">Update Category</span>
-                      </Button>
-                      <Button
-                        className="actions_btn-child"
-                        onClick={this.setModalShowCategoryDelete}
-                        variant="danger"
-                      >
-                        <DeleteForeverIcon className="category_icon" />
-                        <span className="title_btn">Delete Category</span>
-                      </Button>
-                    </div>
-                  </div>
-                  {this.renderAddCategoryModal(category1)}
-                  {/* delete */}
-                  <Modal
-                    show={this.state.showDelete}
-                    onHide={this.hiddenDelete}
+                          <Col>
+                            <Form.Group controlId="exampleForm.ControlSelect1">
+                              <Form.Label>Category select</Form.Label>
+                              <Form.Control
+                                onChange={(e) =>
+                                  this.handleCategoryInput(
+                                    "idParent",
+                                    e.target.value,
+                                    index,
+                                    "expanded"
+                                  )
+                                }
+                                //value={this.state.idParent}
+                                value={values.idParent}
+                                as="select"
+                              >
+                                <option value="">category select</option>
+                                {category1.map((values, index) => {
+                                  return (
+                                    <option key={index} value={values.id}>
+                                      {values.name}
+                                    </option>
+                                  );
+                                })}
+                              </Form.Control>
+                            </Form.Group>
+                          </Col>
+
+                          <Col>
+                            <Form.Group controlId="exampleForm.ControlSelect1">
+                              <Form.Label>Type select</Form.Label>
+                              <Form.Control
+                                name="typeSelected"
+                                onChange={(e) =>
+                                  this.handleCategoryInput(
+                                    "type",
+                                    e.target.value,
+                                    index,
+                                    "expanded"
+                                  )
+                                }
+                                value={values.type}
+                                as="select"
+                              >
+                                <option value="">Type select</option>
+                                <option value="store">Store</option>
+                                <option value="product">Product</option>
+                                <option value="page">Page</option>
+                              </Form.Control>
+                            </Form.Group>
+                          </Col>
+                        </Row>
+                      );
+                    })
+                  ) : (
+                    <p>No data available </p>
+                  )}
+                </div>
+
+                <div className="checked_category">
+                  <p className="checked">Checked Category</p>
+                  {checkedArrayShow.length > 0 ? (
+                    checkedArrayShow.map((values, index) => {
+                      return (
+                        <Row>
+                          <Col>
+                            <Form.Group controlId="exampleForm.ControlInput1">
+                              <Form.Label>Name category</Form.Label>
+                              <Form.Control
+                                type="text"
+                                //name="nameUpdate"
+                                //value={this.state.nameUpdate}
+                                value={values.name}
+                                //onChange={this.onChangeUpdate}
+                                onChange={(e) =>
+                                  this.handleCategoryInput(
+                                    "name",
+                                    e.target.value,
+                                    index,
+                                    "checked"
+                                  )
+                                }
+                                placeholder="input category..."
+                              />
+                            </Form.Group>
+                          </Col>
+
+                          <Col>
+                            <Form.Group controlId="exampleForm.ControlSelect1">
+                              <Form.Label>Category select</Form.Label>
+                              <Form.Control
+                                onChange={(e) =>
+                                  this.handleCategoryInput(
+                                    "idParent",
+                                    e.target.value,
+                                    index,
+                                    "checked"
+                                  )
+                                }
+                                //value={this.state.idParent}
+                                value={values.idParent}
+                                as="select"
+                              >
+                                <option value="">category select</option>
+                                {category1.map((values, index) => {
+                                  return (
+                                    <option key={index} value={values.id}>
+                                      {values.name}
+                                    </option>
+                                  );
+                                })}
+                              </Form.Control>
+                            </Form.Group>
+                          </Col>
+
+                          <Col>
+                            <Form.Group controlId="exampleForm.ControlSelect1">
+                              <Form.Label>Type select</Form.Label>
+                              <Form.Control
+                                name="typeSelected"
+                                onChange={(e) =>
+                                  this.handleCategoryInput(
+                                    "type",
+                                    e.target.value,
+                                    index,
+                                    "checked"
+                                  )
+                                }
+                                value={values.type}
+                                as="select"
+                              >
+                                <option value="">Type select</option>
+                                <option value="store">Store</option>
+                                <option value="product">Product</option>
+                                <option value="page">Page</option>
+                              </Form.Control>
+                            </Form.Group>
+                          </Col>
+                        </Row>
+                      );
+                    })
+                  ) : (
+                    <p>No data available </p>
+                  )}
+                </div>
+                <Modal.Footer>
+                  <Button
+                    onClick={this.updateCategory}
+                    type="submit"
+                    variant="primary"
                   >
-                    <Modal.Header closeButton>
-                      <Modal.Title>Are you sure delete category?</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      {
-                        // this.showDeleteName()
-                        this.state.checked.length > 0 ? (
-                          this.showDeleteName()
-                        ) : (
-                          <h6>No data available </h6>
-                        )
-                      }
-                    </Modal.Body>
-                    <Modal.Footer>
-                      <Button
-                        variant="primary"
-                        onClick={this.hiddenDeleteAccess}
-                      >
-                        Save Changes
-                      </Button>
-                      <Button variant="secondary" onClick={this.hiddenDelete}>
-                        Close
-                      </Button>
-                    </Modal.Footer>
-                  </Modal>
-                  {/* Edit */}
-                  <Modal
-                    show={this.state.updateCategory}
-                    onHide={this.updateCategory}
-                    size="lg"
-                    aria-labelledby="contained-modal-title-vcenter"
-                    centered
-                  >
-                    <Modal.Header closeButton>
-                      <Modal.Title id="contained-modal-title-vcenter">
-                        Update Category
-                      </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      <Form onSubmit={this.onSubmitUpdate}>
-                        <div className="expanded_category">
-                          <p className="expanded">Expanded Category</p>
-                          {console.log(expandedArrayShow)}
-                          {expandedArrayShow.length > 0 ? (
-                            expandedArrayShow.map((values, index) => {
-                              return (
-                                <Row key={index}>
-                                  <Col>
-                                    <Form.Group controlId="exampleForm.ControlInput1">
-                                      <Form.Label>Name category</Form.Label>
-                                      <Form.Control
-                                        type="text"
-                                        //name="nameUpdate"
-                                        // value={this.state.name}
-                                        value={values.name}
-                                        onChange={(e) =>
-                                          this.handleCategoryInput(
-                                            "name",
-                                            e.target.value,
-                                            index,
-                                            "expanded"
-                                          )
-                                        }
-                                        placeholder="input category..."
-                                      />
-                                    </Form.Group>
-                                  </Col>
-
-                                  <Col>
-                                    <Form.Group controlId="exampleForm.ControlSelect1">
-                                      <Form.Label>Category select</Form.Label>
-                                      <Form.Control
-                                        onChange={(e) =>
-                                          this.handleCategoryInput(
-                                            "idParent",
-                                            e.target.value,
-                                            index,
-                                            "expanded"
-                                          )
-                                        }
-                                        //value={this.state.idParent}
-                                        value={values.idParent}
-                                        as="select"
-                                      >
-                                        <option value="">category select</option>
-                                        {category1.map((values, index) => {
-                                          return (
-                                            <option
-                                              key={index}
-                                              value={values.id}
-                                            >
-                                              {values.name}
-                                            </option>
-                                          );
-                                        })}
-                                      </Form.Control>
-                                    </Form.Group>
-                                  </Col>
-
-                                  <Col>
-                                    <Form.Group controlId="exampleForm.ControlSelect1">
-                                      <Form.Label>Type select</Form.Label>
-                                      <Form.Control
-                                        name="typeSelected"
-                                        onChange={(e) =>
-                                          this.handleCategoryInput(
-                                            "type",
-                                            e.target.value,
-                                            index,
-                                            "expanded"
-                                          )
-                                        }
-                                        value={values.type}
-                                        as="select"
-                                      >
-                                        <option value="">Type select</option>
-                                        <option value="store">Store</option>
-                                        <option value="product">Product</option>
-                                        <option value="page">Page</option>
-                                      </Form.Control>
-                                    </Form.Group>
-                                  </Col>
-                                </Row>
-                              );
-                            })
-                          ) : (
-                            <p>No data available </p>
-                          )}
-                        </div>
-
-                        <div className="checked_category">
-                          <p className="checked">Checked Category</p>
-                          {checkedArrayShow.length > 0 ? (
-                            checkedArrayShow.map((values, index) => {
-                              return (
-                                <Row>
-                                  <Col>
-                                    <Form.Group controlId="exampleForm.ControlInput1">
-                                      <Form.Label>Name category</Form.Label>
-                                      <Form.Control
-                                        type="text"
-                                        //name="nameUpdate"
-                                        //value={this.state.nameUpdate}
-                                        value={values.name}
-                                        //onChange={this.onChangeUpdate}
-                                        onChange={(e) =>
-                                          this.handleCategoryInput(
-                                            "name",
-                                            e.target.value,
-                                            index,
-                                            "checked"
-                                          )
-                                        }
-                                        placeholder="input category..."
-                                      />
-                                    </Form.Group>
-                                  </Col>
-
-                                  <Col>
-                                    <Form.Group controlId="exampleForm.ControlSelect1">
-                                      <Form.Label>Category select</Form.Label>
-                                      <Form.Control
-                                        onChange={(e) =>
-                                          this.handleCategoryInput(
-                                            "idParent",
-                                            e.target.value,
-                                            index,
-                                            "checked"
-                                          )
-                                        }
-                                        //value={this.state.idParent}
-                                        value={values.idParent}
-                                        as="select"
-                                      >
-                                        <option value="">category select</option>
-                                        {category1.map((values, index) => {
-                                          return (
-                                            <option
-                                              key={index}
-                                              value={values.id}
-                                            >
-                                              {values.name}
-                                            </option>
-                                          );
-                                        })}
-                                      </Form.Control>
-                                    </Form.Group>
-                                  </Col>
-
-                                  <Col>
-                                    <Form.Group controlId="exampleForm.ControlSelect1">
-                                      <Form.Label>Type select</Form.Label>
-                                      <Form.Control
-                                        name="typeSelected"
-                                        onChange={(e) =>
-                                          this.handleCategoryInput(
-                                            "type",
-                                            e.target.value,
-                                            index,
-                                            "checked"
-                                          )
-                                        }
-                                        value={values.type}
-                                        as="select"
-                                      >
-                                        <option value="">Type select</option>
-                                        <option value="store">Store</option>
-                                        <option value="product">Product</option>
-                                        <option value="page">Page</option>
-                                      </Form.Control>
-                                    </Form.Group>
-                                  </Col>
-                                </Row>
-                              );
-                            })
-                          ) : (
-                            <p>No data available </p>
-                          )}
-                        </div>
-                        <Modal.Footer>
-                          <Button
-                            onClick={this.updateCategory}
-                            type="submit"
-                            variant="primary"
-                          >
-                            Save Changes
-                          </Button>
-                          <Button onClick={this.updateCategory}>Close</Button>
-                        </Modal.Footer>
-                      </Form>
-                    </Modal.Body>
-                  </Modal>
-                </Col>
-              </Row>
-              <Row>
-                <Col md={12}>
-                  {/* đọc json dạng cha-con này hiển thị lên UI */}
-                  {/* <ul>{this.getMenu(category)}</ul> */}
-                  <CheckboxTree
-                    nodes={this.createCategories(category1)}
-                    checked={this.state.checked}
-                    expanded={this.state.expanded}
-                    onCheck={(checked) => this.setState({ checked })}
-                    onExpand={(expanded) => this.setState({ expanded })}
-                    icons={{
-                      check: <CheckBox />,
-                      uncheck: <CheckBoxOutlineBlank />,
-                      halfCheck: <CheckBoxOutlineBlank />,
-                      expandClose: <KeyboardArrowRight />,
-                      expandOpen: <KeyboardArrowDown />,
-                    }}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col className="edit_category">
-                  <h3>Edit Category</h3>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <CheckboxTree
-                    nodes={this.createCategoriesTree(category1)}
-                    checked={this.state.checked}
-                    expanded={this.state.expanded}
-                    onCheck={(checked) => this.setState({ checked })}
-                    onExpand={(expanded) => this.setState({ expanded })}
-                    icons={{
-                      check: <CheckBox />,
-                      uncheck: <CheckBoxOutlineBlank />,
-                      halfCheck: <CheckBoxOutlineBlank />,
-                      expandClose: <KeyboardArrowRight />,
-                      expandOpen: <KeyboardArrowDown />,
-                    }}
-                  />
-                </Col>
-              </Row>
-            </Container>
-          </Col>
-        </Row>
-      </Container>
+                    Save Changes
+                  </Button>
+                  <Button onClick={this.updateCategory}>Close</Button>
+                </Modal.Footer>
+              </Form>
+            </Modal.Body>
+          </Modal>
+          {/* đọc json dạng cha-con này hiển thị lên UI */}
+          {/* <ul>{this.getMenu(category)}</ul> */}
+          <CheckboxTree
+            nodes={this.createCategories(category1)}
+            checked={this.state.checked}
+            expanded={this.state.expanded}
+            onCheck={(checked) => this.setState({ checked })}
+            onExpand={(expanded) => this.setState({ expanded })}
+            icons={{
+              check: <CheckBox />,
+              uncheck: <CheckBoxOutlineBlank />,
+              halfCheck: <CheckBoxOutlineBlank />,
+              expandClose: <KeyboardArrowRight />,
+              expandOpen: <KeyboardArrowDown />,
+            }}
+          />
+          <h3>Edit Category</h3>
+          <CheckboxTree
+            nodes={this.createCategoriesTree(category1)}
+            checked={this.state.checked}
+            expanded={this.state.expanded}
+            onCheck={(checked) => this.setState({ checked })}
+            onExpand={(expanded) => this.setState({ expanded })}
+            icons={{
+              check: <CheckBox />,
+              uncheck: <CheckBoxOutlineBlank />,
+              halfCheck: <CheckBoxOutlineBlank />,
+              expandClose: <KeyboardArrowRight />,
+              expandOpen: <KeyboardArrowDown />,
+            }}
+          />
+        </div>
+      </div>
     );
   }
 }

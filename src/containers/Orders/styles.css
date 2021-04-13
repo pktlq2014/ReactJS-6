@@ -24,7 +24,7 @@
 }
 .order_parent {
   display: flex;
-  margin: 1rem 0 0 0;
+  margin: 0 0 1rem 0;
   border: 2px solid gray;
   flex-direction: column;
 }
@@ -152,8 +152,8 @@
 .orders_delete:hover {
   color: red;
 }
-.notify_orders {
+.notify_orders_new {
   font-size: 1.5rem;
   font-weight: 900;
-  margin-top: 1rem;
+  text-align: center;
 }

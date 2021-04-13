@@ -7,6 +7,9 @@
   box-shadow: inset 0 0 0.2rem gray;
   background-color: #eee;
 }
+.balance {
+  margin-bottom: 0.75rem;
+}
 .side_bar {
 }
 .side_bar-marginLeft {
@@ -42,7 +45,7 @@ div.edit_category span {
   font-size: 1.75rem;
 }
 .actions_btn-child {
-  margin-left: 2rem;
+  margin-left: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -56,7 +59,6 @@ div.edit_category span {
   top: 0;
 }
 .actions_btn-child span.title_btn {
-
 }
 .actions_btn > span {
   font-size: 1.25rem;

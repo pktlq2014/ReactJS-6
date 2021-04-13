@@ -173,126 +173,128 @@ class Home extends Component {
     });
     return (
       <div className="admin">
-        <SideBar />
-        <div className="textAlign-justify side_bar-marginLeft">
-          <Container>
-            <Row>
-              <Col md={12}>
-                <div className="category">
-                  <h3>Type</h3>
-                  <Button onClick={this.setModalShow} variant="success">
-                    Add Type
-                  </Button>
-
-                  <Modal
-                    show={this.state.modalShow}
-                    onHide={this.onHideShow}
-                    size="lg"
-                    aria-labelledby="contained-modal-title-vcenter"
-                    centered
-                  >
-                    <Modal.Header closeButton>
-                      <Modal.Title id="contained-modal-title-vcenter">
-                        Add New Type
-                      </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      <Form onSubmit={this.onSubmit}>
-                        <Form.Group controlId="exampleForm.ControlInput1">
-                          <Form.Label>Title</Form.Label>
-                          <Form.Control
-                            type="text"
-                            name="title"
-                            value={this.state.title}
-                            onChange={this.onChange}
-                            placeholder="title..."
-                          />
-                        </Form.Group>
-                        <Form.Group controlId="exampleForm.ControlSelect1">
-                          <Form.Label>Category select</Form.Label>
-                          <Form.Control
-                            name="categoryID"
-                            onChange={this.onChange}
-                            value={this.state.categoryID}
-                            as="select"
-                          >
-                            <option>category select</option>
-                            {this.getOptionMenu(category).map(
-                              (values, index) => {
-                                return (
-                                  <option key={index} value={values.id}>
-                                    {values.name}
-                                  </option>
-                                );
-                              }
-                            )}
-                          </Form.Control>
-                        </Form.Group>
-                        {this.state.bannerPictures.length > 0
-                          ? this.state.bannerPictures.map((values, index) => {
-                              return <div key={index}>{values.name}</div>;
-                            })
-                          : null}
-                        <Form.File
-                          type="file"
-                          name="imageBanner"
-                          onChange={this.onChangeImageBanner}
-                          id="exampleFormControlFile1"
-                          label="Picture banner input"
-                        />
-                        {this.state.productPictures.length > 0
-                          ? this.state.productPictures.map((values, index) => {
-                              return <div key={index}>{values.name}</div>;
-                            })
-                          : null}
-                        <Form.File
-                          type="file"
-                          name="imageProduct"
-                          onChange={this.onChangeImageProduct}
-                          id="exampleFormControlFile2"
-                          label="Picture product input"
-                        />
-                        <Modal.Footer>
-                          <Button
-                            onClick={this.onHideShow}
-                            type="submit"
-                            variant="primary"
-                          >
-                            Save Changes
-                          </Button>
-                          <Button onClick={this.onHideShow}>Close</Button>
-                        </Modal.Footer>
-                      </Form>
-                    </Modal.Body>
-                  </Modal>
-                </div>
-              </Col>
-            </Row>
-            <Row>
-              <Col md={12}>
-                <Table striped bordered hover variant="dark">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>CategoryID</th>
-                      <th>Title</th>
-                      <th>ProductPicture</th>
-                      <th>BannerPicture</th>
-                    </tr>
-                  </thead>
-                  <tbody>{data}</tbody>
-                </Table>
-              </Col>
-            </Row>
-          </Container>
+        <div className="side_bar_menu_new admin_left">
+          <li>
+            <NavLink exact to="/">
+              Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink exact to="/notification">
+              Notification
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/products">Products</NavLink>
+          </li>
+          <li>
+            <NavLink to="/orders">Orders</NavLink>
+          </li>
+          <li>
+            <NavLink to="/category">Category</NavLink>
+          </li>
         </div>
-        {/* <Col md={10} className="textAlign-justify side_bar-marginLeft">
-         </Col> */}
+        <div className="admin_right ">
+          <div className="category_new">
+            <h3>Type</h3>
+            <Button onClick={this.setModalShow} variant="success">
+              Add Type
+            </Button>
+
+            <Modal
+              show={this.state.modalShow}
+              onHide={this.onHideShow}
+              size="lg"
+              aria-labelledby="contained-modal-title-vcenter"
+              centered
+            >
+              <Modal.Header closeButton>
+                <Modal.Title id="contained-modal-title-vcenter">
+                  Add New Type
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <Form onSubmit={this.onSubmit}>
+                  <Form.Group controlId="exampleForm.ControlInput1">
+                    <Form.Label>Title</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="title"
+                      value={this.state.title}
+                      onChange={this.onChange}
+                      placeholder="title..."
+                    />
+                  </Form.Group>
+                  <Form.Group controlId="exampleForm.ControlSelect1">
+                    <Form.Label>Category select</Form.Label>
+                    <Form.Control
+                      name="categoryID"
+                      onChange={this.onChange}
+                      value={this.state.categoryID}
+                      as="select"
+                    >
+                      <option>category select</option>
+                      {this.getOptionMenu(category).map((values, index) => {
+                        return (
+                          <option key={index} value={values.id}>
+                            {values.name}
+                          </option>
+                        );
+                      })}
+                    </Form.Control>
+                  </Form.Group>
+                  {this.state.bannerPictures.length > 0
+                    ? this.state.bannerPictures.map((values, index) => {
+                        return <div key={index}>{values.name}</div>;
+                      })
+                    : null}
+                  <Form.File
+                    type="file"
+                    name="imageBanner"
+                    onChange={this.onChangeImageBanner}
+                    id="exampleFormControlFile1"
+                    label="Picture banner input"
+                  />
+                  {this.state.productPictures.length > 0
+                    ? this.state.productPictures.map((values, index) => {
+                        return <div key={index}>{values.name}</div>;
+                      })
+                    : null}
+                  <Form.File
+                    type="file"
+                    name="imageProduct"
+                    onChange={this.onChangeImageProduct}
+                    id="exampleFormControlFile2"
+                    label="Picture product input"
+                  />
+                  <Modal.Footer>
+                    <Button
+                      onClick={this.onHideShow}
+                      type="submit"
+                      variant="primary"
+                    >
+                      Save Changes
+                    </Button>
+                    <Button onClick={this.onHideShow}>Close</Button>
+                  </Modal.Footer>
+                </Form>
+              </Modal.Body>
+            </Modal>
+          </div>
+          <Table striped bordered hover className="table_new" variant="dark">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>CategoryID</th>
+                <th>Title</th>
+                <th>ProductPicture</th>
+                <th>BannerPicture</th>
+              </tr>
+            </thead>
+            <tbody>{data}</tbody>
+          </Table>
+        </div>
       </div>
-      // <Container fluid>
-      //   <Row className="side_bar">
-      //    </Row>
-      // </Container>
     );
   }
 }
