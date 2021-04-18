@@ -158,6 +158,67 @@ class Test extends Component {
               <div>c</div>
             </div>
           </Grid>
+          <Grid
+            className="divide_ui_right_child_4"
+            spacing={2}
+            container
+            xs={12}
+            sm={12}
+            md={12}
+            lg={12}
+            xl={12}
+          >
+            <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
+              <div className="divide_ui_right_child_4_left">
+                <Grid
+                  className="divide_ui_right_child_4_left_top_parent"
+                  container
+                  xs={12}
+                  sm={12}
+                  md={12}
+                  lg={12}
+                  xl={12}
+                >
+                  <Grid item xs={11} sm={11} md={11} lg={11} xl={11}>
+                    <div className="divide_ui_right_child_4_left_top">
+                      <div>1</div>
+                      <div>2</div>
+                      <div>3</div>
+                    </div>
+                  </Grid>
+                  <Grid item xs={11} sm={11} md={11} lg={11} xl={11}>
+                    <div className="divide_ui_right_child_4_left_bottom">
+                      <Grid
+                        spacing={3}
+                        className="divide_ui_right_child_4_left_bottom_parent"
+                        container
+                        xs={12}
+                        sm={12}
+                        md={12}
+                        lg={12}
+                        xl={12}
+                      >
+                        <Grid item xs={11} sm={6} md={6} lg={6} xl={6}>
+                          <div className="divide_ui_right_child_4_left_bottom_left">
+                            left
+                          </div>
+                        </Grid>
+                        <Grid item xs={11} sm={6} md={6} lg={6} xl={6}>
+                          <div className="divide_ui_right_child_4_left_bottom_right">
+                            right
+                          </div>
+                        </Grid>
+                      </Grid>
+                    </div>
+                  </Grid>
+                </Grid>
+                <div className="mr-bt-15"></div>
+              </div>
+            </Grid>
+            <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
+              <div className="divide_ui_right_child_4_left">a</div>
+            </Grid>
+          </Grid>
         </Grid>
       </div>
     );
