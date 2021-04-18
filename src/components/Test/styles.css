@@ -1,0 +1,143 @@
+.header_test {
+    font-size: 1rem;
+    color: white;
+  }
+  .header_test_parent {
+    background-color: red;
+  }
+  .test_input:focus {
+    outline: none;
+  }
+  .test_input {
+    margin: 0 0.5rem;
+    text-indent: 0.5rem;
+    padding: 0.25rem 0.5rem 0.25rem 0;
+    border: none;
+    border-radius: 0.25rem;
+  }
+  @media only screen and (min-width: 320px) {
+    .divide_ui {
+      display: grid;
+      margin: 1rem 2rem 1rem 1rem;
+      grid-column-gap: 1rem;
+      grid-template-columns: 20% 80%;
+    }
+  }
+  @media only screen and (min-width: 480px) {
+    .divide_ui {
+      display: grid;
+      margin: 1rem 2rem 1rem 1rem;
+      grid-column-gap: 1rem;
+      grid-template-columns: 20% 80%;
+    }
+  }
+  @media only screen and (min-width: 576px) {
+    .divide_ui {
+      display: grid;
+      margin: 1rem 2rem 1rem 1rem;
+      grid-column-gap: 1rem;
+      grid-template-columns: 20% 80%;
+    }
+  }
+  @media only screen and (min-width: 768px) {
+    .divide_ui {
+      display: grid;
+      margin: 1rem 2rem 1rem 1rem;
+      grid-column-gap: 1rem;
+      grid-template-columns: 20% 80%;
+    }
+  }
+  @media only screen and (min-width: 992px) {
+    .divide_ui {
+      display: grid;
+      margin: 1rem 2rem 1rem 1rem;
+      grid-column-gap: 1rem;
+      grid-template-columns: 20% 80%;
+    }
+  }
+  @media only screen and (min-width: 1200px) {
+    .divide_ui {
+      display: grid;
+      margin: 1rem 2rem 1rem 1rem;
+      grid-column-gap: 1rem;
+      grid-template-columns: 20% 80%;
+    }
+  }
+  .detail {
+      border: 1px solid grey;
+  }
+  .detail_item {
+  
+  }
+  .detail_item_button {
+      border: 1px solid grey;
+  }
+  .detail_button {
+      display: flex;
+      justify-content: space-between;
+      align-content: center;
+  }
+  
+  .divide_ui_left {
+    border: 1px solid grey;
+  }
+  .item_test > div {
+    width: 16.75rem;
+  }
+  .divide_ui_right {
+    border: 1px solid grey;
+  }
+  .divide_ui_right_child_1 {
+    display: flex;
+    padding-right: 1.5rem;
+    justify-content: center;
+    padding-bottom: 1.5rem;
+    align-content: center;
+  }
+  .item_test {
+    border: 1px solid grey;
+    padding: 1rem;
+    margin-top: 1.5rem;
+    margin-left: 1.5rem;
+  }
+  .margin-bottom {
+  }
+  .item_test_top {
+    display: flex;
+    padding: 0 0.5rem;
+    align-content: center;
+    justify-content: flex-start;
+  }
+  .input_test {
+    width: 100%;
+  }
+  
+  .search_name {
+    margin-top: 0.5rem;
+  }
+  .divide_land_test {
+    width: 100%;
+    padding-top: 1rem;
+    border-bottom: 1px solid grey;
+  }
+  .divide_ui_right_child_2_item_left {
+      border: 1px solid grey;
+      /* width: 17.5rem; */
+  }
+  .divide_ui_right_child_2 {
+      display: flex;
+      padding-bottom: 1rem;
+      justify-content: center;
+      align-content: center;
+  }
+  .divide_ui_right_child_3 {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+  }
+  .divide_ui_right_child_3_input {
+      width: 100%;
+  }
+  .divide_ui_right_child_3_name {
+      margin-top: 1rem;
+  }

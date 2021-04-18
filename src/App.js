@@ -7,12 +7,14 @@ import Notification from './containers/Notification/Notification';
 import Category from './containers/Category/category';
 import Orders from './containers/Orders/orders';
 import Signup from "./containers/Signup/index";
+import Test from './components/Test/Test';
 import Layout from "./components/Layout/index";
 import PrivateRoute from './components/Admin/PrivateRoute';
 function App() {
   return (
     <div className="App">
       <Router>
+        <Test/>
         <Layout />
         <Switch>
           {/* <Route path="/" exact component={Home} /> */}
